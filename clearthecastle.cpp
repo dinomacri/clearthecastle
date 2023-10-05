@@ -1,6 +1,8 @@
 #include <iostream>
 
 // UI files
+//    - For linux: apt install libncurses5-dev 
+//    - compile with -lncurses 
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <curses.h>
