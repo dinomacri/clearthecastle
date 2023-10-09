@@ -1,7 +1,7 @@
 #include "Mob.h"
 #include <iostream>
 #include <string>
-
+// its  getters and setters
 int Mob::getCurrentHealth()
 {
     return currentHealth;
@@ -52,3 +52,4 @@ void Mob::setCurrentDamage(int newDamage)
 {
     currentDamage = newDamage;
 };
+

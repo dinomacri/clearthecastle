@@ -9,18 +9,18 @@ Item::Item()
     location[0] = 0;
     location[1] = 0;
     healthBonus = 0;
-    strengthBonus = 0;
+    damageBonus = 0;
     armourBonus = 0;
     specialAttribute = 0;
 }
 
-Item::Item(std::string name, int xCord, int yCord, int healthBonus, int strengthBonus, int armourBonus, int specialAttribute)
+Item::Item(std::string name, int xCord, int yCord, int healthBonus, int damageBonus, int armourBonus, int specialAttribute)
 {
     this->name = name;
     location[0] = xCord;
     location[1] = yCord;
     this->healthBonus = healthBonus;
-    this->strengthBonus = strengthBonus;
+    this->damageBonus = damageBonus;
     this->armourBonus = armourBonus;
     this->specialAttribute = specialAttribute;
 }
@@ -40,7 +40,7 @@ int Item::getSpecialAttribute()
     return specialAttribute;
 }
 
-int Item::getStrengthBonus()
+int Item::getDamageBonus()
 {
-    return strengthBonus;
+    return damageBonus;
 }
