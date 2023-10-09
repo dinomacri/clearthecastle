@@ -1,9 +1,10 @@
-#include "Boss.h"
-#include "Mob.h"
-#include "Player.h"
-#include "Item.h"
 #include <iostream>
 #include <string>
+#include "Player.h"
+#include "Boss.h"
+
+// #include <windows.h> for windows clients. 
+#include <unistd.h>
 
 Player::Player()
 {
@@ -17,9 +18,13 @@ Player::Player()
     currentHealth = 0;
     currentDamage = 0;
     currentArmour = 0;
+
+    inventory.fill(Item("empty", 0, 0, 0, 0, 0, 0));
+
+    
 };
-// actual constructor
-Player::Player(std::string name, int xCord, int yCord, int baseHealth, int baseDamage, int baseArmour,int specialAbility)
+
+Player::Player(std::string name, int xCord, int yCord, int baseHealth, int baseDamage, int baseArmour, int specialAbility)
 {
     this->name = name;
     location[0] = xCord;
@@ -32,10 +37,120 @@ Player::Player(std::string name, int xCord, int yCord, int baseHealth, int baseD
     currentDamage = baseDamage;
     currentArmour = baseArmour;
     
+    inventory.fill(Item("empty", 0, 0, 0, 0, 0, 0));
 }
 
-// get inventory, passing in the index
-Item Player::getInventory(int index)
+void Player::fight(Mob& target)
+{
+    bool bossAlive = true;
+    bool playerAlive = true;
+    
+    sleep(1);
+
+    while (bossAlive == true && playerAlive==true)
+    {
+        // player attacks boss
+        if (bossAlive == true)
+        {
+            attack(target);
+            if (!(target.getCurrentHealth() > 0))
+            {
+                std::cout << target.getDeathMessage() << std::endl;
+                std::cout << target.getName() << " is slain." << std::endl;
+                bossAlive = false;
+                return;
+            }
+        }
+        sleep(0);
+
+        // boss attacks player
+        if (playerAlive == true)
+        {
+            target.attack(*this);
+            if (!(this->getCurrentHealth() > 0))
+            {
+                std::cout << "You died!" << std::endl;
+                playerAlive = false;
+                return;
+            }
+        }
+    }
+}
+
+void Player::attack(Mob& target)
+{
+    std::cout << std::endl;
+    std::cout << "You attack " << target.getName() << std::endl;
+    target.receiveAttack(5);
+}
+
+void Player::receiveAttack(int damage)
+{
+    std::cout << std::endl;
+    this->takeDamage(damage);
+    std::cout << "Boss has struck you for " << damage << " damage !" << std::endl;
+    std::cout << this->getName() << "'s health is now: " << this->getCurrentHealth() << std::endl;
+}
+
+int Player::getTotalDamage() {
+    int totalDamage = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        totalDamage = totalDamage + inventory[i].getHealthBonus();
+    }
+    
+    return baseDamage+totalDamage;
+}
+
+int Player::getTotalArmour() {
+    int totalArmour = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        totalArmour = totalArmour + inventory[i].getArmourBonus();
+    }
+    
+    return baseArmour+totalArmour;
+}
+
+int Player::getTotalHealth() {
+    int totalHealth = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        totalHealth = totalHealth + inventory[i].getHealthBonus();
+    }
+    
+    return baseHealth+totalHealth;
+}
+
+void Player::equipItem(Item item)
+{
+    // Ideally, this would only allow you to carry one weapon, one armour 'type' etc.
+    // However, current functionality allows you to stack 3 swords etc.
+    // this is fine. 
+    std::cout << std::endl;
+    printInventory();
+    int slot = -1;
+    while (slot <= 0 || slot > 3)
+    {
+        std::cout << std::endl << "Select a slot: ";
+        std::cin >> slot;
+    }
+
+    int slot_index = slot-1;
+
+    if (inventory[slot_index].getName() == "empty") {
+        inventory[slot_index] = item;
+    }
+    else
+    {
+        std::cout << "This slot is full. Consider dropping an item." << std::endl;
+    }
+}
+
+Item Player::getInventorySlot(int index)
 {
     if (index >= 0 && index < 3)
     {
@@ -43,81 +158,17 @@ Item Player::getInventory(int index)
     }
     else
     {
-        // Handle the case where the index is out of bounds, e.g., return a default item or throw an exception.
-        // This depends on your application's requirements.
-        // Here's an example of returning a default Item:
-        return Item(); // Assuming Item has a default constructor
+        std::cout << "Index out of bounds";
+        return Item();
     }
 }
 
 // displaying the inventory 
-void Player::displayInventory()
+void Player::printInventory()
 {
     for(int i = 0; i < 3; i++)
     {
-        std::string ItemName = inventory[i].getName();
-         std::cout << ItemName << std::endl;
+        std::cout << inventory[i].getName() << " | ";
     }
+    std::cout << std::endl;
 };
-
-
-//player take damage function, passing in the damage the boss will take
-// this function will be called in the defend function
-void Player::PlayerTakeDamage(int damage)
-{
-    // only armour takes damage
-   
-    if (currentArmour > damage)
-    {
-        currentArmour -= damage;
-        
-        std::cout << name << "'s Armour has protected their health but taken " << damage << " damage. Remaining Armour: " << currentArmour << "\n";
-    };
-
-    // only health takes damage
-
-    if (currentArmour == 0)
-    {
-        currentHealth -= damage;
-        std::cout << name << "'s Armour is depleted, their health has taken " << damage << " damage. Remaining Health: " << currentHealth << "\n";
-    };
-
-    // armour and health take damage
-
-    if ((currentArmour < damage) && (currentArmour > 0))
-    {
-        int A = currentArmour - damage;
-        currentHealth += A;
-        currentArmour = 0;
-        std::cout << name << "'s Armour was depleted by the attack, their health has taken " << -A << " damage. Remaining Health: " << currentHealth << "\n";
-        
-    };
-
-    
-    
-    
-    
-};
-
-
-//attack function
-//passes in a pointer to the boss and the current damage of the player
-void Player::PlayerAttack(Boss *Boss, int currentDamage)
-{
-    Boss->BossTakeDamage(currentDamage);
-    
-    std::cout << Player::getName() << " attacks "  << Boss->getName() <<"!\n";
-
-};
-
-// defend function, takes the players special ability, divides it by 10 and multiplies that by damage. possible error with using ints and dividing by 10
-void Player::PlayerDefend(int damage)
-{
-    int damageModifier = specialAbility;
-    damageModifier = damage * (damageModifier/10);
-    PlayerTakeDamage(damageModifier);
-
-
-}; 
-
-

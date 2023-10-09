@@ -20,9 +20,8 @@ class Item : public Entity
     int getDamageBonus();
     int getArmourBonus();
     int getSpecialAttribute();
-    
 
-
+    std::string getName();
 };
 
 #endif // ITEM_H

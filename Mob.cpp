@@ -2,54 +2,32 @@
 #include <iostream>
 #include <string>
 // its  getters and setters
-int Mob::getCurrentHealth()
-{
-    return currentHealth;
-};
-
 int Mob::getBaseHealth()
 {
     return baseHealth;
 };
 
-void Mob::setCurrentHealth(int newHealth)
+int Mob::getCurrentHealth()
 {
-    currentHealth = newHealth;
-};
-
-
-
-int Mob::getCurrentArmour()
-{
-    return currentArmour;
-};
+    return currentHealth;
+}
 
 int Mob::getBaseArmour()
 {
     return baseArmour;
 };
 
-void Mob::setCurrentArmour(int newArmour)
-{
-    currentArmour = newArmour;
-};
-
-
-
-
-int Mob::getCurrentDamage()
-{
-    return currentDamage;
-};
-
-
 int Mob::getBaseDamage()
 {
     return baseDamage;
 };
 
-void Mob::setCurrentDamage(int newDamage)
+void Mob::takeDamage(int damage)
 {
-    currentDamage = newDamage;
+    currentHealth = currentHealth - damage;
 };
 
+std::string Mob::getDeathMessage()
+{
+    return deathMessage;
+}

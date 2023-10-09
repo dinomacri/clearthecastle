@@ -1,13 +1,13 @@
 #include "Item.h"
-#include "Entity.h"
 #include <iostream>
 #include <string>
 
 Item::Item()
 {
-    name = "";
+    name = "default";
     location[0] = 0;
     location[1] = 0;
+
     healthBonus = 0;
     damageBonus = 0;
     armourBonus = 0;
@@ -23,6 +23,11 @@ Item::Item(std::string name, int xCord, int yCord, int healthBonus, int damageBo
     this->damageBonus = damageBonus;
     this->armourBonus = armourBonus;
     this->specialAttribute = specialAttribute;
+}
+
+std::string Item::getName()
+{
+    return name;
 }
 
 int Item::getHealthBonus()
