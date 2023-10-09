@@ -15,23 +15,23 @@ class Mob : public Entity
     int currentArmour;
     int currentHealth;
     int currentDamage;
+    std::string deathMessage;
  
 
     public:
     // member functions
-    int getCurrentHealth();
     int getBaseHealth();
-    void setCurrentHealth(int newHealth);
-    
+    int getCurrentHealth();
+    void takeDamage(int damage);
 
-    int getCurrentArmour();
     int getBaseArmour();
-    void setCurrentArmour(int newArmour);
     
-    int getCurrentDamage();
     int getBaseDamage();
-    void setCurrentDamage(int newDamage);
-    
+
+    virtual void attack(Mob& target) = 0;
+    virtual void receiveAttack(int damage) = 0;
+
+    std::string getDeathMessage();
 
 };
 
