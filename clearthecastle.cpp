@@ -63,12 +63,172 @@ void startupMessage() {
   return;
 }
 
-void menuSelection() {
-  clear();
+enum CharacterType { WIZARD, WARRIOR, MONK };
+
+struct Character {
+    std::string name;
+    CharacterType type;
+    int health;
+    int strength;
+    int specialAttribute;
+};
+
+Character characterSelection() {
+Character character;
+    clear();
+    printw("Enter your character name: ");
+    refresh();
+
+    char name[100];
+    getstr(name);
+    character.name = name;
+
+    clear();
+    printw("Choose your character type:\n");
+    printw("1. Wizard\n");
+    printw("2. Warrior\n");
+    printw("3. Monk\n");
+    refresh();
+
+    int typeChoice;
+    while (1) {
+        typeChoice = getch() - '0';
+        if (typeChoice >= 1 && typeChoice <= 3) {
+            break;
+        }
+    }
+    character.type = static_cast<CharacterType>(typeChoice - 1);
+
+    clear();
+    printw("Distribute 10 points between Health, Strength, and Special Attribute:\n");
+    refresh();
+
+    int pointsRemaining = 10;
+    while (pointsRemaining > 0) {
+        clear();
+        printw("Points remaining: %d\n", pointsRemaining);
+        printw("1. Health: %d\n", character.health);
+        printw("2. Strength: %d\n", character.strength);
+        printw("3. Special Attribute: %d\n", character.specialAttribute);
+        refresh();
+
+        int attributeChoice;
+        while (1) {
+            attributeChoice = getch() - '0';
+            if (attributeChoice >= 1 && attributeChoice <= 3) {
+                break;
+            }
+        }
+
+        int* attributeToUpdate = nullptr;
+        switch (attributeChoice) {
+            case 1:
+                attributeToUpdate = &character.health;
+                break;
+            case 2:
+                attributeToUpdate = &character.strength;
+                break;
+            case 3:
+                attributeToUpdate = &character.specialAttribute;
+                break;
+        }
+
+        clear();
+        printw("Enter points to add (0-%d): ", pointsRemaining);
+        refresh();
+
+        int pointsToAdd;
+        while (1) {
+            pointsToAdd = getch() - '0';
+            if (pointsToAdd >= 0 && pointsToAdd <= pointsRemaining) {
+                break;
+            }
+        }
+        *attributeToUpdate += pointsToAdd;
+        pointsRemaining -= pointsToAdd;
+    }
+
+    return character;
 }
 
-void characterSelection() {
-  // TODO: Enter character selection screen UI elements here
+int menu() {
+
+    const char * menuTitle[] = {"   __  ___             ","  /  |/  /__ ___  __ __"," / /|_/ / -_) _ \\/ // /","/_/  /_/\\__/_//_/\\_,_/ "};
+
+    clear();
+    refresh();
+    int * terminal_window = getTerminalSize(); // Returns [rows, cols]
+
+    noecho(); // Don't echo user input
+    cbreak(); // Disable line buffering (receive input character-by-character)
+    keypad(stdscr, TRUE); // Enable keypad for arrow keys
+
+    int selectedOption = 0;
+
+    int ch;
+    while (1) {
+      clear(); // Clear the screen
+
+      for (int i = 0; i < 4; i++) {
+        mvprintw(1+i, (terminal_window[1]/2)-12, menuTitle[i]);
+      }
+
+      // Display your menu options
+      mvprintw(terminal_window[0] / 2 - 4, (terminal_window[1] / 2) - 8, "Select an option:");
+
+      for (int i = 0; i < 40; i++) {
+        mvprintw((terminal_window[0] / 2) - 6, ((terminal_window[1] / 2) - 20) + i, "=");
+        mvprintw((terminal_window[0] / 2) + 6, ((terminal_window[1] / 2) - 20) + i, "=");
+      }
+
+      for (int i = 0; i <= 2; i++) {
+        if (i == selectedOption) {
+          if (i == 0) {
+            mvprintw((terminal_window[0] / 2) - 2, (terminal_window[1] / 2) - 5, "=> Start <=\n");
+          } else if (i == 1) {
+            mvprintw((terminal_window[0] / 2) + 1, ((terminal_window[1] / 2) - 5), "=> Load <=");
+          } else {
+            mvprintw((terminal_window[0] / 2) + 4, (terminal_window[1] / 2) - 5, "=> Quit <=\n");
+          }
+        } else {
+          if (i == 0) {
+            mvprintw((terminal_window[0] / 2) - 2, (terminal_window[1] / 2) - 5, "   Start\n");
+          } else if (i == 1) {
+            mvprintw((terminal_window[0] / 2) + 1, ((terminal_window[1] / 2)) - 5, "   Load\n");
+          } else {
+            mvprintw((terminal_window[0] / 2) + 4, (terminal_window[1] / 2) - 5, "   Quit\n");
+          }
+        }
+      }
+
+      refresh(); // Refresh the screen
+
+      ch = getch(); // Get user input
+
+      switch (ch) {
+      case KEY_UP:
+        if (selectedOption > 0) {
+          selectedOption--;
+        }
+        break;
+      case KEY_DOWN:
+        if (selectedOption < 2) {
+          selectedOption++;
+        }
+        break;
+      case 10: // ASCII code for Enter
+        clear();
+        if (selectedOption == 0) {
+          return 1;
+        } else if (selectedOption == 1) {
+            printw("Loading Menu");
+            return 0;
+        } else {
+            endwin();
+            exit(0);
+        }
+      }
+    }
 }
 
 // Declare logger globally
@@ -117,9 +277,21 @@ void mainGameLoop() {
 }
 
 void startGame() {
-  // startupMessage();
-  // menuSelection();
-  // characterSelection();
+  Character player;
+  startupMessage();
+  if (menu() == 1) {
+    player = characterSelection();
+  }
+
+    printw("Character created!\n");
+    printw("Name: %s\n", player.name.c_str());
+    printw("Type: %s\n", player.type == WIZARD ? "Wizard" : (player.type == WARRIOR ? "Warrior" : "Monk"));
+    printw("Health: %d\n", player.health);
+    printw("Strength: %d\n", player.strength);
+    printw("Special Attribute: %d\n", player.specialAttribute);
+    refresh();
+
+    getch();
   mainGameLoop();
 }
 
