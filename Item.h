@@ -9,7 +9,7 @@ class Item : public Entity
 {
     private:
     int healthBonus;
-    int strengthBonus;
+    int damageBonus;
     int armourBonus;
     int specialAttribute;
 
@@ -17,7 +17,7 @@ class Item : public Entity
     Item();
     Item(std::string name, int xCord, int yCord, int healthBonus, int strengthBonus, int armourBonus, int specialAttribute);
     int getHealthBonus();
-    int getStrengthBonus();
+    int getDamageBonus();
     int getArmourBonus();
     int getSpecialAttribute();
     

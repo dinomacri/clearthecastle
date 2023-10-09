@@ -8,18 +8,21 @@ class Mob : public Entity
 {
 
     protected:
+    //member variables
     int baseHealth;
     int baseDamage;
     int baseArmour;
     int currentArmour;
     int currentHealth;
     int currentDamage;
+ 
 
     public:
+    // member functions
     int getCurrentHealth();
     int getBaseHealth();
     void setCurrentHealth(int newHealth);
-    void takeDamage();
+    
 
     int getCurrentArmour();
     int getBaseArmour();
@@ -28,9 +31,7 @@ class Mob : public Entity
     int getCurrentDamage();
     int getBaseDamage();
     void setCurrentDamage(int newDamage);
-   
-    virtual void attack() = 0;
-    virtual void defend() = 0;
+    
 
 };
 
