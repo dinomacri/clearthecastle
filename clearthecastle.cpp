@@ -64,31 +64,18 @@ void startupMessage() {
 }
 
 void menuSelection() {
+
+  const char* dagger1[] = {"      O                ","{o)xxx|===========-","      O                "};
+  const char* dagger2[] = {"            O","-===========|xxx(o}","            O"};
+
   clear(); refresh();
   int buttonSelection = 0;
+  int* terminal_window = getTerminalSize(); // Returns [rows, cols]
+  bool finished = false;
 
-  while (true) {
-    timeout(100);
-    int* terminal_window = getTerminalSize(); // Returns [rows, cols]
-
-    mvprintw((terminal_window[0]/2), (terminal_window[1]/2)-3, "Start");
-
-    int x = getch(); // Get key press and determine what key it was
-
-    switch (x) {
-      case 65:
-        if (buttonSelection == 0); break;
-        buttonSelection -= 1;
-      break;
-      case 66:
-        if (buttonSelection == 2); break;
-        buttonSelection += 1;
-      break;
-    }
-
-
-  }
-
+  while (!finished) {
+    
+  };
 }
 
 void characterSelection() {
