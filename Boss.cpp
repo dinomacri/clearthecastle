@@ -49,3 +49,8 @@ void Boss::receiveAttack(int damage)
     std::cout << "You have hit " << this->getName() << " for " << damage << " damage!" << std::endl;
     std::cout << this->getName() << "'s health is now " <<  this->getCurrentHealth() << std::endl;
 };
+
+std::string Boss::getDeathMessage()
+{
+    return deathMessage;
+}

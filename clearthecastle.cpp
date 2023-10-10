@@ -90,7 +90,7 @@ void mainGameLoop() {
 
   Boss boss("geoff", 1, 1, 50, 50, 50, "NOOOOOO!!");
 
-  steve.fight(boss);
+  steve.fight(steve, boss);
   
   // std::cout << "The current armour of " << boss.getName() << " is " << boss.getBaseArmour() << std::endl;
 }

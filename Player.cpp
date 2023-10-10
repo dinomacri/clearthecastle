@@ -3,9 +3,6 @@
 #include "Player.h"
 #include "Boss.h"
 
-// #include <windows.h> for windows clients. 
-#include <unistd.h>
-
 Player::Player()
 {
     this->name = "";
@@ -38,43 +35,6 @@ Player::Player(std::string name, int xCord, int yCord, int baseHealth, int baseD
     currentArmour = baseArmour;
     
     inventory.fill(Item("empty", 0, 0, 0, 0, 0, 0));
-}
-
-void Player::fight(Mob& target)
-{
-    bool bossAlive = true;
-    bool playerAlive = true;
-    
-    sleep(1);
-
-    while (bossAlive == true && playerAlive==true)
-    {
-        // player attacks boss
-        if (bossAlive == true)
-        {
-            attack(target);
-            if (!(target.getCurrentHealth() > 0))
-            {
-                std::cout << target.getDeathMessage() << std::endl;
-                std::cout << target.getName() << " is slain." << std::endl;
-                bossAlive = false;
-                return;
-            }
-        }
-        sleep(0);
-
-        // boss attacks player
-        if (playerAlive == true)
-        {
-            target.attack(*this);
-            if (!(this->getCurrentHealth() > 0))
-            {
-                std::cout << "You died!" << std::endl;
-                playerAlive = false;
-                return;
-            }
-        }
-    }
 }
 
 void Player::attack(Mob& target)
