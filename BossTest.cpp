@@ -1,19 +1,18 @@
-#include "Boss.h"
-#include "Mob.h"
-
 #include <iostream>
 #include <string>
 
+#include "Boss.h"
+#include "Player.h"
+#include "Mob.h"
+#include "Item.h"
+#include "Entity.h"
+
 int main()
 {
-    std::cout<< "Test Boss" << std::endl;
-    Boss Greg("Greg", 1, 1, 10, 3, 4, "Greg fucken died", "Club");
-    std::string DeathMessage = Greg.getDeathMessage(); // Get the armour bonus
+    Boss greg("greg", 1, 1, 50, 50, 50, "NOOOOOO!!");
 
-    // Print the armour bonus to the console
-    std::cout << DeathMessage << std::endl;
-
-
+    // Print the armour to the console
+    std::cout << greg.getBaseArmour() << std::endl;
 
     return 0;
 }

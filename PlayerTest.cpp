@@ -7,13 +7,10 @@
 int main()
 {
     std::cout<< "Test Player" << std::endl;
-    Boss Greg("Greg", 1, 1, 10, 3, 4, "Greg fucken died", "Club");
-    std::string DeathMessage = Greg.getDeathMessage(); // Get the armour bonus
+    Player Steve("Steve", 0, 0, 10, 15, 20, 0);
 
     // Print the armour bonus to the console
-    std::cout << DeathMessage << std::endl;
-
-
+    std::cout << Steve.getBaseArmour() << std::endl;
 
     return 0;
 }
