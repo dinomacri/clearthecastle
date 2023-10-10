@@ -7,10 +7,10 @@
 class Boss : public Mob {
 
     protected:
+
     // defining member variables
 
-    // As you can see, I had some troubles accessing deathMessage() from Boss directly, and interacting with Player.
-    // it's now in Mob.
+    std::string deathMessage;
 
     public:
     //defining constructors
@@ -19,6 +19,7 @@ class Boss : public Mob {
     
     void attack(Mob& target) override;
     void receiveAttack(int damage) override;
+    std::string getDeathMessage();
 };
 
 #endif // BOSS_H

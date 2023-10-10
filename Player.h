@@ -24,7 +24,6 @@ class Player: public Mob
     
     void equipItem(Item item);
 
-    void fight(Mob& target);
     void attack(Mob& target) override;
     void receiveAttack(int damage) override;
 

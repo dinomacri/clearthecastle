@@ -15,8 +15,6 @@ class Mob : public Entity
     int currentArmour;
     int currentHealth;
     int currentDamage;
-    std::string deathMessage;
- 
 
     public:
     // member functions
@@ -28,10 +26,9 @@ class Mob : public Entity
     
     int getBaseDamage();
 
+    void fight(Mob& target_player, Mob& target_boss);
     virtual void attack(Mob& target) = 0;
     virtual void receiveAttack(int damage) = 0;
-
-    std::string getDeathMessage();
 
 };
 
