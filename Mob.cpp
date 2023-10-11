@@ -30,7 +30,29 @@ int Mob::getBaseDamage()
 
 void Mob::takeDamage(int damage)
 {
-    currentHealth = currentHealth - damage;
+    std::cout << currentArmour << " " << damage << "\n";
+     if (currentArmour >= damage)
+    {
+        currentArmour =  currentArmour - damage;
+        
+        std::cout << name << "'s Armour has protected their health but taken " << damage << " damage. Remaining Armour: " << currentArmour << "\n";
+    };
+
+    // no armour, health takes all the damage
+    if (currentArmour <= 0)
+    {
+         currentHealth = currentHealth -  damage;
+        std::cout << name << "'s Armour is depleted, their health has taken " << damage << " damage. Remaining Health: " << currentHealth << "\n";
+    };
+
+    //armour and health take damage
+    if ((currentArmour < damage) && (currentArmour > 0))
+    {
+        int A = currentArmour - damage;
+        currentHealth = currentHealth + A;
+        currentArmour = 0;
+        std::cout << name << "'s Armour was depleted by the attack, their health has taken " << -A << " damage. Remaining Health: " << currentHealth << "\n";
+    };
 };
 
 void Mob::fight(Mob& target_player, Mob& target_boss)
@@ -66,7 +88,7 @@ void Mob::fight(Mob& target_player, Mob& target_boss)
                 return;
             }
         }
-        sleep(0);
+        sleep(1);
 
         // boss attacks player
         if (playerAlive == true)
