@@ -15,6 +15,7 @@ class Boss : public Mob {
     public:
     //defining constructors
     Boss();
+    ~Boss();
     Boss(std::string name, int baseHealth, int baseDamage, int baseArmour, std::string deathMessage);
     
     void attack(Mob& target) override;

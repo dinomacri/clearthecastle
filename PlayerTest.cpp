@@ -1,8 +1,11 @@
-#include "Player.h"
-#include "Mob.h"
-
 #include <iostream>
 #include <string>
+
+#include "Player.h"
+#include "Mob.h"
+#include "Logger.h"
+
+Logger logger;
 
 int main()
 {

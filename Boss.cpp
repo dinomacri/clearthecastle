@@ -1,8 +1,11 @@
 #include <iostream>
 #include <string>
+
 #include "Boss.h"
 #include "Player.h"
-// default constructor
+#include "Logger.h"
+
+extern Logger logger;
 
 Boss::Boss()
 {
@@ -13,6 +16,11 @@ Boss::Boss()
     deathMessage = "";
     // int xCord, yCord, baseHealth, baseDamage, baseArmour = 0;
 };
+
+Boss::~Boss()
+{
+    logger.print_debug("~Boss() called: " + getName() + " was destroyed\n");
+}
 
 // actual constructor
 Boss::Boss(std::string name, int baseHealth, int baseDamage, int baseArmour, std::string deathMessage)

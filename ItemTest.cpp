@@ -1,7 +1,10 @@
-
-#include "Item.h"
 #include <iostream>
 #include <string>
+
+#include "Item.h"
+#include "Logger.h"
+
+Logger logger;
 
 int main() {
     std::cout<< "test item" << std::endl;

@@ -1,6 +1,10 @@
-#include "Item.h"
 #include <iostream>
 #include <string>
+
+#include "Item.h"
+#include "Logger.h"
+
+extern Logger logger;
 
 Item::Item()
 {
@@ -14,9 +18,7 @@ Item::Item()
 
 Item::~Item()
 {
-    #ifdef DEBUG
-    std::cout << "DEBUG: " << getName() << " was destroyed (Item)\n";
-    #endif
+    logger.print_debug("~Item() called: " + getName() + " was destroyed\n");
 }
 
 Item::Item(std::string name, int healthBonus, int damageBonus, int armourBonus, int specialAttribute)

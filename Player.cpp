@@ -99,6 +99,9 @@ void Player::equipItem(Item* item)
 
     if (inventory[slot_index].getName() == "empty") {
         inventory[slot_index] = *item;
+        std::cout << "\n";
+        printInventory();
+        std::cout << "\n";
     }
     else
     {

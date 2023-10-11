@@ -6,6 +6,9 @@
 #include "Mob.h"
 #include "Item.h"
 #include "Entity.h"
+#include "Logger.h"
+
+Logger logger;
 
 int main()
 {

@@ -1,9 +1,10 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "Entity.h"
 #include <iostream>
 #include <string>
+
+#include "Entity.h"
 
 class Item : public Entity
 {

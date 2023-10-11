@@ -13,7 +13,7 @@ Room::Room()
 
 void Room::enterRoom(Player &player)
 {
-    std::cout << "You enter the first room.\n";
+    std::cout << "You enter the next room.\n";
     sleep(1);
 
     // Check if boss in room
@@ -30,6 +30,8 @@ void Room::enterRoom(Player &player)
 
         player.fight(player, *boss);
         }
+        // clear all bosses from room
+        bosses.clear();
     }
 
     // Check if there are items in the room

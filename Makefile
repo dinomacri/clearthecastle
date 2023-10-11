@@ -8,7 +8,7 @@ DEBUGFLAG = -DDEBUG
 TARGET = run.out
 
 MAIN_SRC = clearthecastle.cpp
-SRCS = Boss.cpp Player.cpp Entity.cpp Mob.cpp Item.cpp Room.cpp
+SRCS = Boss.cpp Player.cpp Entity.cpp Mob.cpp Item.cpp Room.cpp Logger.cpp
 
 TEST_SCRIPT = test.sh
 

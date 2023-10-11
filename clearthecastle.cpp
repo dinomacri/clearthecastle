@@ -13,6 +13,7 @@
 #include "Item.h"
 #include "Entity.h"
 #include "Room.h"
+#include "Logger.h"
 
 // TODO: Add required file includes here
 int *getTerminalSize() {
@@ -70,10 +71,20 @@ void characterSelection() {
   // TODO: Enter character selection screen UI elements here
 }
 
+// Declare logger globally
+Logger logger;
+
 void mainGameLoop() {
   clear(); refresh();
 
   // All initialisation might go into initialise() function later
+
+  // Initialise Logger
+  #ifdef DEBUG
+  logger = Logger(true);
+  #else
+  logger = Logger(false);
+  #endif
 
   // Initialise rooms
   Room room1;
@@ -81,7 +92,7 @@ void mainGameLoop() {
   Room room3;
 
   // Initialise bosses
-  Boss* boss1 = new Boss("geoff", 50, 50, 50, "NOOOOOO!!");
+  Boss* boss1 = new Boss("geoff", 20, 10, 10, "NOOOOOO!");
   Boss* boss2 = new Boss("frank", 100, 10, 5, "you will not get away with this!");
 
   // Initialise items
@@ -92,8 +103,8 @@ void mainGameLoop() {
   room2.addItem(item1);
   room3.addBoss(boss2);
 
-  // Declare player (might be referenced from cahracterSelection() later on)
-  Player steve("Steve", 100, 10, 5, 0);
+  // Declare player (might be referenced from characterSelection() later on)
+  Player steve("Steve", 20, 20, 10, 0);
   
 
   // Begin story
@@ -105,7 +116,6 @@ void mainGameLoop() {
   std::cout << "players base damage is " << steve.getBaseDamage() << std::endl;
   std::cout << "players total damage is " << steve.getTotalDamage() << std::endl;
   std::cout << "\n";
-  steve.printInventory();
 }
 
 void startGame() {
