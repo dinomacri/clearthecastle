@@ -5,8 +5,6 @@
 Item::Item()
 {
     name = "default";
-    location[0] = 0;
-    location[1] = 0;
 
     healthBonus = 0;
     damageBonus = 0;
@@ -14,11 +12,16 @@ Item::Item()
     specialAttribute = 0;
 }
 
-Item::Item(std::string name, int xCord, int yCord, int healthBonus, int damageBonus, int armourBonus, int specialAttribute)
+Item::~Item()
+{
+    #ifdef DEBUG
+    std::cout << "DEBUG: " << getName() << " was destroyed (Item)\n";
+    #endif
+}
+
+Item::Item(std::string name, int healthBonus, int damageBonus, int armourBonus, int specialAttribute)
 {
     this->name = name;
-    location[0] = xCord;
-    location[1] = yCord;
     this->healthBonus = healthBonus;
     this->damageBonus = damageBonus;
     this->armourBonus = armourBonus;

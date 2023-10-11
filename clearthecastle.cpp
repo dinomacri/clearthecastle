@@ -12,6 +12,7 @@
 #include "Mob.h"
 #include "Item.h"
 #include "Entity.h"
+#include "Room.h"
 
 // TODO: Add required file includes here
 int *getTerminalSize() {
@@ -70,29 +71,41 @@ void characterSelection() {
 }
 
 void mainGameLoop() {
-    clear(); refresh();
-  // TODO: Enter main game logic/elements here, including battle, inventory, map etc.
-  // Could require more functions like renderMap() or a changeView() function etc.
-  Item wooden_sword("wooden_sword", 0, 0, 1, 1, 1, 0);
+  clear(); refresh();
 
-                // name, x, y, hp, damage, armour, special
-  Player steve("Steve", 0, 0, 100, 10, 5, 0);
+  // All initialisation might go into initialise() function later
 
-  // steve.equipItem(wooden_sword);
-  // steve.equipItem(wooden_sword);
-  // steve.equipItem(wooden_sword);
-  // steve.equipItem(wooden_sword);
+  // Initialise rooms
+  Room room1;
+  Room room2;
+  Room room3;
+
+  // Initialise bosses
+  Boss* boss1 = new Boss("geoff", 50, 50, 50, "NOOOOOO!!");
+  Boss* boss2 = new Boss("frank", 100, 10, 5, "you will not get away with this!");
+
+  // Initialise items
+  Item* item1 = new Item("Wooden sword", 10, 0, 0, 0);
+
+  // Place bosses and items in rooms
+  room1.addBoss(boss1);
+  room2.addItem(item1);
+  room3.addBoss(boss2);
+
+  // Declare player (might be referenced from cahracterSelection() later on)
+  Player steve("Steve", 100, 10, 5, 0);
   
+
+  // Begin story
+
+  room1.enterRoom(steve);
+  sleep(1);
+  room2.enterRoom(steve);
+
   std::cout << "players base damage is " << steve.getBaseDamage() << std::endl;
   std::cout << "players total damage is " << steve.getTotalDamage() << std::endl;
-
+  std::cout << "\n";
   steve.printInventory();
-
-  Boss boss("geoff", 1, 1, 50, 50, 50, "NOOOOOO!!");
-
-  steve.fight(steve, boss);
-  
-  // std::cout << "The current armour of " << boss.getName() << " is " << boss.getBaseArmour() << std::endl;
 }
 
 void startGame() {

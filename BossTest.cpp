@@ -9,7 +9,7 @@
 
 int main()
 {
-    Boss greg("greg", 1, 1, 50, 50, 50, "NOOOOOO!!");
+    Boss greg("greg", 50, 50, 50, "NOOOOOO!!");
 
     // Print the armour to the console
     std::cout << greg.getBaseArmour() << std::endl;
