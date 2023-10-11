@@ -8,12 +8,16 @@ extern Logger logger;
 
 Item::Item()
 {
-    name = "default";
+    Item("empty", 0, 0, 0, 0);
+}
 
-    healthBonus = 0;
-    damageBonus = 0;
-    armourBonus = 0;
-    specialAttribute = 0;
+Item::Item(std::string _name, int _healthBonus, int _damageBonus, int _armourBonus, int _specialAttribute)
+{
+    name = _name;
+    healthBonus = _healthBonus;
+    damageBonus = _damageBonus;
+    armourBonus = _armourBonus;
+    specialAttribute = _specialAttribute;
 }
 
 Item::~Item()
@@ -21,14 +25,6 @@ Item::~Item()
     logger.print_debug("~Item() called: " + getName() + " was destroyed\n");
 }
 
-Item::Item(std::string name, int healthBonus, int damageBonus, int armourBonus, int specialAttribute)
-{
-    this->name = name;
-    this->healthBonus = healthBonus;
-    this->damageBonus = damageBonus;
-    this->armourBonus = armourBonus;
-    this->specialAttribute = specialAttribute;
-}
 
 std::string Item::getName()
 {

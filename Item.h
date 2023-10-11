@@ -16,7 +16,7 @@ class Item : public Entity
 
     public:
     Item();
-    Item(std::string name, int healthBonus, int strengthBonus, int armourBonus, int specialAttribute);
+    Item(std::string _name, int _healthBonus, int _strengthBonus, int _armourBonus, int _specialAttribute);
     ~Item();
     int getHealthBonus();
     int getDamageBonus();

@@ -87,9 +87,9 @@ void mainGameLoop() {
   #endif
 
   // Initialise rooms
-  Room room1;
-  Room room2;
-  Room room3;
+  Room room1("Room 1");
+  Room room2("Room 2");
+  Room room3("Room 3");
 
   // Initialise bosses
   Boss* boss1 = new Boss("geoff", 20, 10, 10, "NOOOOOO!");
@@ -106,9 +106,7 @@ void mainGameLoop() {
   // Declare player (might be referenced from characterSelection() later on)
   Player steve("Steve", 20, 20, 10, 0);
   
-
   // Begin story
-
   room1.enterRoom(steve);
   sleep(1);
   room2.enterRoom(steve);

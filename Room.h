@@ -2,16 +2,20 @@
 #define ROOM_H
 #include <vector>
 
+#include "Entity.h"
 #include "Item.h"
 #include "Player.h"
 
-class Room {
+class Room : public Entity
+{
     private:
         std::vector<Item*> items;
         std::vector<Boss*> bosses;
 
     public:
         Room();
+        Room(std::string _name);
+        ~Room();
     
     void enterRoom(Player& player);
 

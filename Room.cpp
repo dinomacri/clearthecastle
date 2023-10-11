@@ -3,12 +3,27 @@
 
 #include "Room.h"
 #include "Boss.h"
+#include "Logger.h"
+
+extern Logger logger;
 
 Room::Room()
 {
+    Room("NULL");
+}
+
+Room::Room(std::string _name)
+{
+    name = _name;
+
     // initialise empty vectors
     items = std::vector<Item*>();
     bosses = std::vector<Boss*>();
+}
+
+Room::~Room()
+{
+    logger.print_debug("~Room() called: " + getName() + " was destroyed\n");
 }
 
 void Room::enterRoom(Player &player)
@@ -30,7 +45,7 @@ void Room::enterRoom(Player &player)
 
         player.fight(player, *boss);
         }
-        // clear all bosses from room
+        // clear the bosses from the room
         bosses.clear();
     }
 
@@ -53,7 +68,7 @@ void Room::enterRoom(Player &player)
                 std::cout << "You decide to leave the item alone\n";
                 sleep(1);
             }
-            // clear all items from room
+            // clear all items from the room
             items.clear();
         }
     }

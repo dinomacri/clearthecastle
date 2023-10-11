@@ -15,7 +15,7 @@ class Player: public Mob
 
     public:
     Player();
-    Player(std::string name, int baseHealth, int baseDamage, int baseArmour, int specialAbility);
+    Player(std::string _name, int _baseHealth, int _baseDamage, int _baseArmour, int _specialAbility);
     Item getInventorySlot(int index);
     void printInventory();
     int getTotalHealth();
@@ -26,7 +26,6 @@ class Player: public Mob
 
     void attack(Mob& target) override;
     void receiveAttack(int damage) override;
-
 };
 
 
