@@ -84,7 +84,9 @@ void Mob::fight(Mob& target_player, Mob& target_boss)
             {
                 std::cout << target_boss_casted.getDeathMessage() << std::endl;
                 std::cout << target_boss.getName() << " is slain." << std::endl;
+                std::cout << "\n";
                 bossAlive = false;
+                sleep(1);
                 return;
             }
         }

@@ -6,8 +6,6 @@
 Player::Player()
 {
     this->name = "";
-    location[0] = 0;
-    location[1] = 0;
     this-> baseHealth = 0;
     this -> baseDamage = 0;
     this -> baseArmour = 0;
@@ -16,16 +14,14 @@ Player::Player()
     currentDamage = 0;
     currentArmour = 0;
 
-    inventory.fill(Item("empty", 0, 0, 0, 0, 0, 0));
+    inventory.fill(Item("empty", 0, 0, 0, 0));
 
     
 };
 
-Player::Player(std::string name, int xCord, int yCord, int baseHealth, int baseDamage, int baseArmour, int specialAbility)
+Player::Player(std::string name, int baseHealth, int baseDamage, int baseArmour, int specialAbility)
 {
     this->name = name;
-    location[0] = xCord;
-    location[1] = yCord;
     this-> baseHealth = baseHealth;
     this -> baseDamage = baseDamage;
     this -> baseArmour = baseArmour;
@@ -34,7 +30,7 @@ Player::Player(std::string name, int xCord, int yCord, int baseHealth, int baseD
     currentDamage = baseDamage;
     currentArmour = baseArmour;
     
-    inventory.fill(Item("empty", 0, 0, 0, 0, 0, 0));
+    inventory.fill(Item("empty", 0, 0, 0, 0));
 }
 
 void Player::attack(Mob& target)
@@ -85,7 +81,7 @@ int Player::getTotalHealth() {
     return baseHealth+totalHealth;
 }
 
-void Player::equipItem(Item item)
+void Player::equipItem(Item* item)
 {
     // Ideally, this would only allow you to carry one weapon, one armour 'type' etc.
     // However, current functionality allows you to stack 3 swords etc.
@@ -102,7 +98,7 @@ void Player::equipItem(Item item)
     int slot_index = slot-1;
 
     if (inventory[slot_index].getName() == "empty") {
-        inventory[slot_index] = item;
+        inventory[slot_index] = *item;
     }
     else
     {
