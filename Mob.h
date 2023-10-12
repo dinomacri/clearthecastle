@@ -20,11 +20,18 @@ class Mob : public Entity
     // member functions
     int getBaseHealth();
     int getCurrentHealth();
+    void setCurrentHealth(int newHealth);
+
     void takeDamage(int damage);
 
     int getBaseArmour();
+    int getCurrentArmour();
+    void setCurrentArmour(int newArmour);
+    
     
     int getBaseDamage();
+    int getCurrentDamage();
+    void setCurrentDamage(int newDamage);
 
     void fight(Mob& target_player, Mob& target_boss);
     virtual void attack(Mob& target) = 0;
