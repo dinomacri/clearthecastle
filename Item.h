@@ -1,9 +1,10 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "Entity.h"
 #include <iostream>
 #include <string>
+
+#include "Entity.h"
 
 class Item : public Entity
 {
@@ -15,7 +16,8 @@ class Item : public Entity
 
     public:
     Item();
-    Item(std::string name, int xCord, int yCord, int healthBonus, int strengthBonus, int armourBonus, int specialAttribute);
+    Item(std::string _name, int _healthBonus, int _strengthBonus, int _armourBonus, int _specialAttribute);
+    ~Item();
     int getHealthBonus();
     int getDamageBonus();
     int getArmourBonus();

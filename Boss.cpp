@@ -1,14 +1,15 @@
 #include <iostream>
 #include <string>
+
 #include "Boss.h"
 #include "Player.h"
-// default constructor
+#include "Logger.h"
+
+extern Logger logger;
 
 Boss::Boss()
 {
     name = "";
-    location[0] = 0;
-    location[1] = 0;
     baseHealth = 0;
     baseDamage = 0;
     baseArmour = 0;
@@ -16,12 +17,15 @@ Boss::Boss()
     // int xCord, yCord, baseHealth, baseDamage, baseArmour = 0;
 };
 
+Boss::~Boss()
+{
+    logger.print_debug("~Boss() called: " + getName() + " was destroyed\n");
+}
+
 // actual constructor
-Boss::Boss(std::string name, int xCord, int yCord, int baseHealth, int baseDamage, int baseArmour, std::string deathMessage)
+Boss::Boss(std::string name, int baseHealth, int baseDamage, int baseArmour, std::string deathMessage)
 {
     this->name = name;
-    location[0] = xCord; // xCord location
-    location[1] = yCord; // yCord location
     this-> baseHealth = baseHealth;
     this -> baseDamage = baseDamage;
     this -> baseArmour = baseArmour;

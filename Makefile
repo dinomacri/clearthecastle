@@ -3,11 +3,12 @@
 CXX = g++
 
 CXXFLAGS = -std=c++11 -Wall -Wextra -lncurses
+DEBUGFLAG = -DDEBUG
 
 TARGET = run.out
 
 MAIN_SRC = clearthecastle.cpp
-SRCS = Boss.cpp Player.cpp Entity.cpp Mob.cpp Item.cpp
+SRCS = Boss.cpp Player.cpp Entity.cpp Mob.cpp Item.cpp Room.cpp Logger.cpp
 
 TEST_SCRIPT = test.sh
 
@@ -23,10 +24,19 @@ all: test
 
 	./$(TARGET)
 
+# Build, test, run (DEBUG)
+.PHONY: debug
+debug: test
+	$(CXX) -o $(TARGET) $(MAIN_SRC) $(SRCS) $(CXXFLAGS) $(DEBUGFLAG)
+
+	./$(TARGET)
+
 # Build and run (no test)
 .PHONY: notest
 notest:
 	$(CXX) -o $(TARGET) $(MAIN_SRC) $(SRCS) $(CXXFLAGS)
+
+	./$(TARGET)
 
 # Test
 .PHONY: test

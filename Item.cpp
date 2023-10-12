@@ -1,29 +1,30 @@
-#include "Item.h"
 #include <iostream>
 #include <string>
 
+#include "Item.h"
+#include "Logger.h"
+
+extern Logger logger;
+
 Item::Item()
 {
-    name = "default";
-    location[0] = 0;
-    location[1] = 0;
-
-    healthBonus = 0;
-    damageBonus = 0;
-    armourBonus = 0;
-    specialAttribute = 0;
+    Item("empty", 0, 0, 0, 0);
 }
 
-Item::Item(std::string name, int xCord, int yCord, int healthBonus, int damageBonus, int armourBonus, int specialAttribute)
+Item::Item(std::string _name, int _healthBonus, int _damageBonus, int _armourBonus, int _specialAttribute)
 {
-    this->name = name;
-    location[0] = xCord;
-    location[1] = yCord;
-    this->healthBonus = healthBonus;
-    this->damageBonus = damageBonus;
-    this->armourBonus = armourBonus;
-    this->specialAttribute = specialAttribute;
+    name = _name;
+    healthBonus = _healthBonus;
+    damageBonus = _damageBonus;
+    armourBonus = _armourBonus;
+    specialAttribute = _specialAttribute;
 }
+
+Item::~Item()
+{
+    logger.print_debug("~Item() called: " + getName() + " was destroyed\n");
+}
+
 
 std::string Item::getName()
 {
