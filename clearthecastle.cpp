@@ -172,7 +172,6 @@ Player characterSelection() {
         std::ifstream input("player.txt");
         if (!input.is_open()) {
           logger.print_error("Error opening file");
-          exit(1);
         }
 
         std::string line1, line2, line3, line4, line5;
@@ -274,7 +273,6 @@ Player characterSelection() {
         std::ofstream output("player.txt");
         if (!output.is_open()) {
           logger.print_error("Error opening file");
-          exit(1);
         }
 
         output << newCharacter.name << "\n";

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <curses.h>
 
 #include "Logger.h"
 
@@ -28,5 +29,8 @@ void Logger::print_debug(const std::string& message) {
     }
 }
 void Logger::print_error(const std::string& message) {
+        endwin();
         std::cout << RED_TEXT << "ERROR: " << message << RESET_TEXT << std::endl;
+        exit(1);
+
 }
