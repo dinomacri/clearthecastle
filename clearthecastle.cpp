@@ -304,8 +304,6 @@ Player characterSelection() {
 }
 
 void mainGameLoop(Player* player) {
-  clear(); refresh();
-
   // All initialisation might go into initialise() function later
 
   // Initialise rooms
@@ -348,7 +346,6 @@ int main(void) {
   Player player;
   player = characterSelection();
   endwin();
-  refresh();
   mainGameLoop(&player);
 
   return 0;
