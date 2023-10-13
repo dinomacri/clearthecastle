@@ -6,6 +6,7 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <curses.h>
+#include <fstream>
 
 #include "Boss.h"
 #include "Player.h"
@@ -14,6 +15,9 @@
 #include "Entity.h"
 #include "Room.h"
 #include "Logger.h"
+
+// Declare logger globally
+Logger logger;
 
 // TODO: Add required file includes here
 int *getTerminalSize() {
@@ -63,94 +67,9 @@ void startupMessage() {
   return;
 }
 
-enum CharacterType { WIZARD, WARRIOR, MONK };
-
-struct Character {
-    std::string name;
-    CharacterType type;
-    int health;
-    int strength;
-    int specialAttribute;
-};
-
-Character characterSelection() {
-Character character;
-    clear();
-    printw("Enter your character name: ");
-    refresh();
-
-    char name[100];
-    getstr(name);
-    character.name = name;
-
-    clear();
-    printw("Choose your character type:\n");
-    printw("1. Wizard\n");
-    printw("2. Warrior\n");
-    printw("3. Monk\n");
-    refresh();
-
-    int typeChoice;
-    while (1) {
-        typeChoice = getch() - '0';
-        if (typeChoice >= 1 && typeChoice <= 3) {
-            break;
-        }
-    }
-    character.type = static_cast<CharacterType>(typeChoice - 1);
-
-    clear();
-    printw("Distribute 10 points between Health, Strength, and Special Attribute:\n");
-    refresh();
-
-    int pointsRemaining = 10;
-    while (pointsRemaining > 0) {
-        clear();
-        printw("Points remaining: %d\n", pointsRemaining);
-        printw("1. Health: %d\n", character.health);
-        printw("2. Strength: %d\n", character.strength);
-        printw("3. Special Attribute: %d\n", character.specialAttribute);
-        refresh();
-
-        int attributeChoice;
-        while (1) {
-            attributeChoice = getch() - '0';
-            if (attributeChoice >= 1 && attributeChoice <= 3) {
-                break;
-            }
-        }
-
-        int* attributeToUpdate = nullptr;
-        switch (attributeChoice) {
-            case 1:
-                attributeToUpdate = &character.health;
-                break;
-            case 2:
-                attributeToUpdate = &character.strength;
-                break;
-            case 3:
-                attributeToUpdate = &character.specialAttribute;
-                break;
-        }
-
-        clear();
-        printw("Enter points to add (0-%d): ", pointsRemaining);
-        refresh();
-
-        int pointsToAdd;
-        while (1) {
-            pointsToAdd = getch() - '0';
-            if (pointsToAdd >= 0 && pointsToAdd <= pointsRemaining) {
-                break;
-            }
-        }
-        *attributeToUpdate += pointsToAdd;
-        pointsRemaining -= pointsToAdd;
-    }
-
-    return character;
-}
-
+// returns:
+// 0: Load Character
+// 1: Create Character
 int menu() {
 
     const char * menuTitle[] = {"   __  ___             ","  /  |/  /__ ___  __ __"," / /|_/ / -_) _ \\/ // /","/_/  /_/\\__/_//_/\\_,_/ "};
@@ -221,7 +140,7 @@ int menu() {
         if (selectedOption == 0) {
           return 1;
         } else if (selectedOption == 1) {
-            printw("Loading Menu");
+            logger.print_debug("Loading menu");
             return 0;
         } else {
             endwin();
@@ -231,20 +150,163 @@ int menu() {
     }
 }
 
-// Declare logger globally
-Logger logger;
 
-void mainGameLoop() {
+Player characterSelection() {
+    // enum CharacterType { WIZARD, WARRIOR, MONK };
+
+    struct Character {
+        std::string name="HELLO";
+        // CharacterType type;
+        int health=0;
+        int damage=0;
+        int armour=0;
+        int specialAttribute=0;
+    };
+    Character newCharacter;
+
+    Player player;
+    // player selects Load
+    if (menu() == 0) {
+        logger.print("Loading from file");
+
+        std::ifstream input("player.txt");
+        if (!input.is_open()) {
+          logger.print_error("Error opening file");
+          exit(1);
+        }
+
+        std::string line1, line2, line3, line4, line5;
+
+        while(input >> line1 >> line2 >> line3 >> line4 >> line5)
+        {
+          newCharacter.name = line1;
+          newCharacter.health = std::stoi(line2);
+          newCharacter.damage = std::stoi(line3);
+          newCharacter.armour = std::stoi(line4);
+          newCharacter.specialAttribute = std::stoi(line5);
+        }
+
+        input.close();
+    }
+    // player selects New
+    else {
+        clear();
+        printw("Enter your character name: ");
+        refresh();
+
+        char name[100];
+        getstr(name);
+        newCharacter.name = std::string(name);
+
+        // clear();
+        // printw("Choose your character type:\n");
+        // printw("1. Wizard\n");
+        // printw("2. Warrior\n");
+        // printw("3. Monk\n");
+        // refresh();
+
+        // int typeChoice;
+        // while (1) {
+        //     typeChoice = getch() - '0';
+        //     if (typeChoice >= 1 && typeChoice <= 3) {
+        //         break;
+        //     }
+        // }
+        // Set character type to user's input
+        // character.type = static_cast<CharacterType>(typeChoice - 1);
+        
+        clear();
+        printw("Distribute 10 points between Health, Damage, and Special Attribute:\n");
+        refresh();
+
+        int pointsRemaining = 10;
+        while (pointsRemaining > 0) {
+            clear();
+            printw("Points remaining: %d\n", pointsRemaining);
+            printw("1. Health: %d\n", newCharacter.health);
+            printw("2. Damage: %d\n", newCharacter.damage);
+            printw("3. Armour: %d\n", newCharacter.armour);
+            printw("4. Special Attribute: %d\n", newCharacter.specialAttribute);
+            refresh();
+
+            int attributeChoice;
+            while (1) {
+                attributeChoice = getch() - '0';
+                if (attributeChoice >= 1 && attributeChoice <= 4) {
+                    break;
+                }
+            }
+
+            int* attributeToUpdate = nullptr;
+            switch (attributeChoice) {
+                case 1:
+                    attributeToUpdate = &newCharacter.health;
+                    break;
+                case 2:
+                    attributeToUpdate = &newCharacter.damage;
+                    break;
+                case 3:
+                    attributeToUpdate = &newCharacter.armour;
+                    break;
+                case 4:
+                    attributeToUpdate = &newCharacter.specialAttribute;
+                    break;
+            }
+
+            clear();
+            printw("Enter points to add (0-%d): ", pointsRemaining);
+            refresh();
+
+            int pointsToAdd;
+            while (1) {
+                pointsToAdd = getch() - '0';
+                if (pointsToAdd >= 0 && pointsToAdd <= pointsRemaining) {
+                    break;
+                }
+            }
+            *attributeToUpdate += pointsToAdd;
+            pointsRemaining -= pointsToAdd;
+        }
+
+        // Save new character to file
+        logger.print("Writing to file");
+
+        std::ofstream output("player.txt");
+        if (!output.is_open()) {
+          logger.print_error("Error opening file");
+          exit(1);
+        }
+
+        output << newCharacter.name << "\n";
+        output << newCharacter.health << "\n";
+        output << newCharacter.damage << "\n";
+        output << newCharacter.armour << "\n";
+        output << newCharacter.specialAttribute << "\n";
+
+        output.close();
+
+        logger.print_debug("Data written to file.");
+    }
+        player = Player(newCharacter.name, newCharacter.health, newCharacter.damage, newCharacter.armour, newCharacter.specialAttribute);
+
+        printw("Character created!\n");
+        printw("Name: %s\n", player.getName().c_str());
+        // printw("Type: %s\n", player.type == WIZARD ? "Wizard" : (player.type == WARRIOR ? "Warrior" : "Monk"));
+        printw("Health: %d\n", player.getBaseHealth());
+        printw("Strength: %d\n", player.getBaseDamage());
+        printw("Armour: %d\n", player.getBaseArmour());
+        // printw("Special Attribute: %d\n", player.getBaseSpecial());
+        refresh();
+
+        getch();
+
+        return player;
+}
+
+void mainGameLoop(Player* player) {
   clear(); refresh();
 
   // All initialisation might go into initialise() function later
-
-  // Initialise Logger
-  #ifdef DEBUG
-  logger = Logger(true);
-  #else
-  logger = Logger(false);
-  #endif
 
   // Initialise rooms
   Room room1("Room 1");
@@ -262,41 +324,32 @@ void mainGameLoop() {
   room1.addBoss(boss1);
   room2.addItem(item1);
   room3.addBoss(boss2);
-
-  // Declare player (might be referenced from characterSelection() later on)
-  Player steve("Steve", 20, 20, 10, 0);
   
   // Begin story
-  room1.enterRoom(steve);
+  room1.enterRoom(*player);
   sleep(1);
-  room2.enterRoom(steve);
+  room2.enterRoom(*player);
+  sleep(1);
 
-  std::cout << "players base damage is " << steve.getBaseDamage() << std::endl;
-  std::cout << "players total damage is " << steve.getTotalDamage() << std::endl;
+  std::cout << "players base damage is " << player->getBaseDamage() << std::endl;
+  std::cout << "players total damage is " << player->getTotalDamage() << std::endl;
   std::cout << "\n";
 }
 
-void startGame() {
-  Character player;
-  startupMessage();
-  if (menu() == 1) {
-    player = characterSelection();
-  }
-
-    printw("Character created!\n");
-    printw("Name: %s\n", player.name.c_str());
-    printw("Type: %s\n", player.type == WIZARD ? "Wizard" : (player.type == WARRIOR ? "Warrior" : "Monk"));
-    printw("Health: %d\n", player.health);
-    printw("Strength: %d\n", player.strength);
-    printw("Special Attribute: %d\n", player.specialAttribute);
-    refresh();
-
-    getch();
-  mainGameLoop();
-}
-
 int main(void) {
-  startGame();
+
+    #ifdef DEBUG
+    logger = Logger(true);
+    #else
+    logger = Logger(false);
+    #endif
+
+  startupMessage();
+  Player player;
+  player = characterSelection();
+  endwin();
+  refresh();
+  mainGameLoop(&player);
 
   return 0;
 }
