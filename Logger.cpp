@@ -27,3 +27,6 @@ void Logger::print_debug(const std::string& message) {
         std::cout << YELLOW_TEXT << "DEBUG: " << message << RESET_TEXT << std::endl;
     }
 }
+void Logger::print_error(const std::string& message) {
+        std::cout << RED_TEXT << "ERROR: " << message << RESET_TEXT << std::endl;
+}
