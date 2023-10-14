@@ -20,6 +20,28 @@ Use the following commands to build clearthecastle:
 
 Then use `./run.out` to run the program.
 
+## UML
+
+![UML](uml.jpg)
+
+## Changes from Project Plan
+
+* Added Room Class
+    - Inherits from Entity
+    - Bosses and Items are added to Room objects for the player to encounter
+
+* Entity Class (Abstract)
+    - Removed location attribute (superseded by Room detection mechanics)
+
+* Mob Class (Abstract)
+    - Added fight() function to battle a player and boss. Utilised attack() and receiveAttack() functions.
+    - Added receiveAttack() function.
+
+* Logger Class
+    - Added print(), print_debug() and print_error() functions. 
+    - Avoids code repetition when printing colored text to user. 
+    - Adds debug message functionality.
+
 ## Authors
 
 * Dino Macri
