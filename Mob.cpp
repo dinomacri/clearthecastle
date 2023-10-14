@@ -99,8 +99,8 @@ void Mob::fight(Mob& target_player, Mob& target_boss)
             if (!(target_player.getCurrentHealth() > 0))
             {
                 std::cout << "You died!" << std::endl;
-                playerAlive = false;
-                return;
+                sleep(1);
+                exit(0);
             }
         }
     }

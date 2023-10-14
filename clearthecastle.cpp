@@ -154,6 +154,10 @@ int menu() {
 Player characterSelection() {
     // enum CharacterType { WIZARD, WARRIOR, MONK };
 
+    // Set total base attributes
+    int totalBaseAttributes = 30;
+    std::string characterFile = "player.txt";
+
     struct Character {
         std::string name="HELLO";
         // CharacterType type;
@@ -169,20 +173,27 @@ Player characterSelection() {
     if (menu() == 0) {
         logger.print("Loading from file");
 
-        std::ifstream input("player.txt");
+        std::ifstream input(characterFile);
         if (!input.is_open()) {
-          logger.print_error("Error opening file");
+          logger.print_error("Error opening " + characterFile);
+          exit(1);
         }
 
         std::string line1, line2, line3, line4, line5;
 
         while(input >> line1 >> line2 >> line3 >> line4 >> line5)
         {
-          newCharacter.name = line1;
-          newCharacter.health = std::stoi(line2);
-          newCharacter.damage = std::stoi(line3);
-          newCharacter.armour = std::stoi(line4);
-          newCharacter.specialAttribute = std::stoi(line5);
+            if ((std::stoi(line2) + std::stoi(line3) + std::stoi(line4) + std::stoi(line5)) > totalBaseAttributes )
+            {
+                logger.print_error("The total attributes in " + characterFile + " exceed " + std::to_string(totalBaseAttributes) + ". Ensure total attributes add up to 30.");
+
+            }
+
+            newCharacter.name = line1;
+            newCharacter.health = std::stoi(line2);
+            newCharacter.damage = std::stoi(line3);
+            newCharacter.armour = std::stoi(line4);
+            newCharacter.specialAttribute = std::stoi(line5);
         }
 
         input.close();
