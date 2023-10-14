@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "Player.h"
@@ -11,132 +12,174 @@ Logger logger;
 
 int main()
 {
-    Boss steve("steve", 50, 50, 50, "NOOOOOO!!");
-    Player greg("greg", 10, 15, 20, 0);
+    // initialise capture variables to capture cout and write to cin
+    std::stringstream outputCapture;
+    std::streambuf* originalOutput; 
+    std::string capturedOutput;
+
+    Player playerTest;
+    Boss bossTest;
 
     // Print the armour to the console
-    std::cout<< "Test 14 testing getbaseamrour() \n";
-    std::cout << greg.getBaseArmour() << std::endl;
-    if (greg.getBaseArmour() != 20)
+    std::cout<< "Player Test 1/11: getBaseArmour() \n";
+    playerTest = Player("playerTest", 0, 0, 10, 0);
+    if (playerTest.getBaseArmour() != 10)
     {
         return 1;
     }
 
-    std::cout<< "Test 15 testing getBaseHealth() \n";
-    std::cout << greg.getBaseHealth() << std::endl;
-    if (greg.getBaseHealth() != 10)
+    std::cout<< "Player Test 2/11: getBaseHealth() \n";
+    playerTest = Player("playerTest", 10, 0, 0, 0);
+    if (playerTest.getBaseHealth() != 10)
     {
         return 1;
     }
     
-    std::cout<< "Test 16 testing getBaseDamage() \n";
-    std::cout << greg.getBaseDamage() << std::endl;
-    if (greg.getBaseDamage() != 15)
+    std::cout<< "Player Test 3/11: getBaseDamage() \n";
+    playerTest = Player("playerTest", 0, 10, 0, 0);
+    if (playerTest.getBaseDamage() != 10)
     {
         return 1;
     }
 
-    std::cout<< "Test 17 testing getCurrentHealth() \n";
-    std::cout << greg.getCurrentHealth() << std::endl;
-    if (greg.getCurrentHealth() != 10)
+    std::cout<< "Player Test 4/21: getCurrentHealth() \n";
+    playerTest = Player("playerTest", 10, 0, 0, 0);
+    if (playerTest.getCurrentHealth() != 10)
     {
         return 1;
     }
 
-    std::cout<< "Test 18 testing takeDamage() \n";
-    greg.takeDamage(5);
-    std::cout << greg.getCurrentArmour() << std::endl;
-    if (greg.getCurrentArmour() != 15)
+    std::cout<< "Player Test 5/11: takeDamage() health \n";
+    playerTest = Player("playerTest", 10, 0, 0, 0);
+    playerTest.takeDamage(1);
+    if (playerTest.getCurrentHealth() != 9)
     {
         return 1;
     }
 
-    std::cout<< "Test 19 testing takeDamage() \n";
-    greg.setCurrentHealth(50);
-    greg.setCurrentArmour(50);
-    greg.takeDamage(50);
-    std::cout << greg.getCurrentArmour() << std::endl;
-    std::cout << greg.getCurrentHealth() << std::endl;
-    if (greg.getCurrentArmour() > 0)
+    std::cout<< "Player Test 6/11: takeDamage() armour \n";
+    playerTest = Player("playerTest", 10, 0, 5, 0);
+    playerTest.takeDamage(1);
+    if (playerTest.getCurrentHealth() != 10)
     {
         return 1;
     }
-    if (greg.getCurrentHealth() != 50)
-    {
-        return 1;
-    }
-
-    std::cout<< "Test 20 testing takeDamage() \n";
-    greg.takeDamage(10);
-    std::cout << greg.getCurrentArmour() << std::endl;
-    std::cout << greg.getCurrentHealth() << std::endl;
-    if (greg.getCurrentArmour() > 0)
-    {
-        return 1;
-    }
-    if (greg.getCurrentHealth() != 40)
+    if (playerTest.getCurrentArmour() != 4)
     {
         return 1;
     }
 
-
-    std::cout<< "Test 21 testing takeDamage() \n";
-    greg.setCurrentHealth(40);
-    greg.takeDamage(40);
-    std::cout << greg.getCurrentArmour() << std::endl;
-    std::cout << greg.getCurrentHealth() << std::endl;
-    if (greg.getCurrentArmour() > 0)
+    std::cout<< "Player Test 7/11: takeDamage() health and armour \n";
+    // damage equals armour
+    playerTest = Player("playerTest", 10, 0, 5, 0);
+    playerTest.takeDamage(5);
+    if (playerTest.getCurrentArmour() != 0)
     {
         return 1;
     }
-    if (greg.getCurrentHealth() > 0)
-    {
-        return 1;
-    }
-
-
-    std::cout<< "Test 22 testing setters() \n";
-    greg.setCurrentArmour(50);
-    greg.setCurrentHealth(50);
-    greg.setCurrentDamage(50);
-    std::cout << greg.getCurrentArmour() << std::endl;
-    std::cout << greg.getCurrentHealth() << std::endl;
-    std::cout << greg.getCurrentDamage() << std::endl;
-    if (greg.getCurrentArmour() != 50)
-    {
-        return 1;
-    }
-    if (greg.getCurrentHealth() != 50)
-    {
-        return 1;
-    }
-     if (greg.getCurrentDamage() != 50)
+    if (playerTest.getCurrentHealth() != 10)
     {
         return 1;
     }
 
-    std::cout<< "Test 23 testing fight, boss dies \n";
-    greg.fight(greg, steve);
+    // damage exceeds armour
+    playerTest = Player("playerTest", 10, 0, 5, 0);
+    playerTest.takeDamage(10);
+    if (playerTest.getCurrentArmour() != 0)
+    {
+        return 1;
+    }
+    if (playerTest.getCurrentHealth() != 5)
+    {
+        return 1;
+    }
+
+    // damage exceeds armour and health (kill)
+    playerTest = Player("playerTest", 10, 0, 5, 0);
+    playerTest.takeDamage(20);
+    if (playerTest.getCurrentArmour() != 0)
+    {
+        return 1;
+    }
+    if (playerTest.getCurrentHealth() != -5)
+    {
+        return 1;
+    }
+
+
+    std::cout<< "Player Test 8/11: setters() \n";
+    playerTest = Player("playerTest", 0, 0, 0, 0);
+    playerTest.setCurrentArmour(50);
+    playerTest.setCurrentHealth(50);
+    if (playerTest.getCurrentArmour() != 50)
+    {
+        return 1;
+    }
+    if (playerTest.getCurrentHealth() != 50)
+    {
+        return 1;
+    }
+
+    std::cout<< "Player Test 9/11: fight, boss dies \n";
+    playerTest = Player("playerTest", 100, 100, 0, 0);
+    bossTest = Boss("bossTest", 10, 10, 10, "deathmessage");
+    playerTest.fight(playerTest, bossTest);
     std::cout<< "done \n";
 
+    // Redirect std::cout to a stringstream
+    originalOutput = std::cout.rdbuf(outputCapture.rdbuf());
 
-    std::cout<< "Test 24 testing receive attack \n";
+    // Call the fight function
+    playerTest.fight(playerTest, bossTest);
 
-    Player Phil("Phil", 10, 15, 20, 0);
-    Phil.receiveAttack(10);
-    Phil.getCurrentArmour();
-    if (Phil.getCurrentArmour() != 10)
+    // Restore the original std::cout
+    std::cout.rdbuf(originalOutput);
+
+    // Get the captured output as a string
+    capturedOutput = outputCapture.str();
+
+    // Check if it contains "testphrase" and "slain"
+    if (capturedOutput.find("deathmessage") == std::string::npos && capturedOutput.find("slain") == std::string::npos) {
+        std::cout << "One or both of 'deathmessage' and 'slain' not found in the output.\n";
+    }
+
+    std::cout<< "Player Test 10/11: receive attack \n";
+    playerTest = Player("playerTest", 10, 10, 10, 0);
+    playerTest.receiveAttack(10);
+    playerTest.getCurrentArmour();
+    if (playerTest.getCurrentArmour() != 0)
     {
         return 1;
     }
 
-     std::cout<< "Test 25 testing print inventory() \n";
-     Phil.printInventory();
+    std::cout<< "Player Test 11/11: print inventory() \n";
+    playerTest = Player("playerTest", 0, 0, 0, 0);
+    Item* itemTest = new Item("testItem", 0, 0, 0, 0);
 
-     std::cout<< "Test 26 testing equip item() and getinventoryslot() \n";
-     Item ChestPlate("plate", 0, 0, 4, 0);
-     Phil.equipItem(&ChestPlate);
-     Phil.getInventorySlot(0);
-     
+    // redirect std::cin to a custom stream
+    std::istringstream inputStringStream("2");
+    std::streambuf* originalCinBuffer = std::cin.rdbuf(inputStringStream.rdbuf());
 
+    playerTest.equipItem(itemTest);
+
+    // restore std::cin to normal buffer
+    std::cin.rdbuf(originalCinBuffer);
+
+    /// Redirect std::cout to a stringstream
+    originalOutput = std::cout.rdbuf(outputCapture.rdbuf());
+
+    // Call the fight function
+    playerTest.printInventory();
+
+    // Restore the original std::cout
+    std::cout.rdbuf(originalOutput);
+
+    // Get the captured output as a string
+    capturedOutput = outputCapture.str();
+
+    // Check if it contains "testItem"
+    if (capturedOutput.find("testItem") == std::string::npos) {
+        std::cout << "'testItem' not found in the output.\n";
+        return 1;
+    }
 }

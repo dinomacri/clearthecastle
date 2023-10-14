@@ -12,132 +12,124 @@ Logger logger;
 
 int main()
 {
-    Boss greg("greg", 50, 50, 50, "NOOOOOO!!");
-    Player Steve("Steve", 10, 15, 20, 0);
+    Player playerTest;
+    Boss bossTest;
 
-    // Print the armour to the console
-    std::cout<< "Test 1 testing getbaseamrour() \n";
-    std::cout << greg.getBaseArmour() << std::endl;
-    if (greg.getBaseArmour() != 50)
+    std::cout<< "Boss Test 1/10: getBaseArmour() \n";
+    bossTest = Boss("bossTest", 0, 0, 10, "deathmessage");
+    std::cout << bossTest.getBaseArmour() << std::endl;
+    if (bossTest.getBaseArmour() != 10)
     {
         return 1;
     }
 
-    std::cout<< "Test 2 testing getBaseHealth() \n";
-    std::cout << greg.getBaseHealth() << std::endl;
-    if (greg.getBaseHealth() != 50)
+    std::cout<< "Boss Test 2/10: getBaseHealth() \n";
+    bossTest = Boss("bossTest", 10, 0, 0, "deathmessage");
+    std::cout << bossTest.getBaseHealth() << std::endl;
+    if (bossTest.getBaseHealth() != 10)
     {
         return 1;
     }
     
-    std::cout<< "Test 3 testing getBaseDamage() \n";
-    std::cout << greg.getBaseDamage() << std::endl;
-    if (greg.getBaseDamage() != 50)
+    std::cout<< "Boss Test 3/10: getBaseDamage() \n";
+    bossTest = Boss("bossTest", 0, 10, 0, "deathmessage");
+    std::cout << bossTest.getBaseDamage() << std::endl;
+    if (bossTest.getBaseDamage() != 10)
     {
         return 1;
     }
 
-    std::cout<< "Test 4 testing getCurrentHealth() \n";
-    std::cout << greg.getCurrentHealth() << std::endl;
-    if (greg.getCurrentHealth() != 50)
+    std::cout<< "Boss Test 4/10: getCurrentHealth() \n";
+    bossTest = Boss("bossTest", 10, 0, 0, "deathmessage");
+    std::cout << bossTest.getCurrentHealth() << std::endl;
+    if (bossTest.getCurrentHealth() != 10)
     {
         return 1;
     }
 
-    std::cout<< "Test 5 testing takeDamage() \n";
-    greg.takeDamage(5);
-    std::cout << greg.getCurrentArmour() << std::endl;
-    if (greg.getCurrentArmour() != 45)
+    std::cout<< "Boss Test 5/10: takeDamage() health and armour \n";
+    // damage equals armour
+    bossTest = Boss("bossTest", 10, 0, 5, "deathmessage");
+    bossTest.takeDamage(5);
+    if (bossTest.getCurrentArmour() != 0)
+    {
+        return 1;
+    }
+    if (bossTest.getCurrentHealth() != 10)
     {
         return 1;
     }
 
-    std::cout<< "Test 6 testing takeDamage() \n";
-    greg.takeDamage(50);
-    std::cout << greg.getCurrentArmour() << std::endl;
-    std::cout << greg.getCurrentHealth() << std::endl;
-    if (greg.getCurrentArmour() > 0)
+    // damage exceeds armour
+    bossTest = Boss("bossTest", 10, 0, 5, "deathmessage");
+    bossTest.takeDamage(10);
+    if (bossTest.getCurrentArmour() != 0)
     {
         return 1;
     }
-    if (greg.getCurrentHealth() != 45)
-    {
-        return 1;
-    }
-
-    std::cout<< "Test 7 testing takeDamage() \n";
-    greg.takeDamage(10);
-    std::cout << greg.getCurrentArmour() << std::endl;
-    std::cout << greg.getCurrentHealth() << std::endl;
-    if (greg.getCurrentArmour() > 0)
-    {
-        return 1;
-    }
-    if (greg.getCurrentHealth() != 35)
+    if (bossTest.getCurrentHealth() != 5)
     {
         return 1;
     }
 
-
-    std::cout<< "Test 8 testing takeDamage() \n";
-    greg.takeDamage(40);
-    std::cout << greg.getCurrentArmour() << std::endl;
-    std::cout << greg.getCurrentHealth() << std::endl;
-    if (greg.getCurrentArmour() > 0)
+    // damage exceeds armour and health (kill)
+    bossTest = Boss("bossTest", 10, 0, 5, "deathmessage");
+    bossTest.takeDamage(20);
+    if (bossTest.getCurrentArmour() != 0)
     {
         return 1;
     }
-    if (greg.getCurrentHealth() > 0)
-    {
-        return 1;
-    }
-
-
-    std::cout<< "Test 9 testing setters() \n";
-    greg.setCurrentArmour(50);
-    greg.setCurrentHealth(50);
-    greg.setCurrentDamage(50);
-    std::cout << greg.getCurrentArmour() << std::endl;
-    std::cout << greg.getCurrentHealth() << std::endl;
-    std::cout << greg.getCurrentDamage() << std::endl;
-    if (greg.getCurrentArmour() != 50)
-    {
-        return 1;
-    }
-    if (greg.getCurrentHealth() != 50)
-    {
-        return 1;
-    }
-     if (greg.getCurrentDamage() != 50)
+    if (bossTest.getCurrentHealth() != -5)
     {
         return 1;
     }
 
-    std::cout<< "Test 10 testing fight, player dies \n";
-    Steve.fight(Steve, greg);
-    std::cout<< "done \n";
-
-
-    std::cout<< "Test 11 testing receive attack \n";
-    Boss Phil("Phil", 50, 50, 50, "im ded");
-    Phil.receiveAttack(10);
-    Phil.getCurrentHealth();
-    if (Phil.getCurrentArmour() != 40)
+    std::cout<< "Boss Test 6/10: setters() \n";
+    playerTest = Player("playerTest", 0, 0, 0, 0);
+    playerTest.setCurrentArmour(10);
+    playerTest.setCurrentHealth(10);
+    std::cout << playerTest.getCurrentArmour() << std::endl;
+    std::cout << playerTest.getCurrentHealth() << std::endl;
+    if (playerTest.getCurrentArmour() != 10)
+    {
+        return 1;
+    }
+    if (playerTest.getCurrentHealth() != 10)
     {
         return 1;
     }
 
-     std::cout<< "Test 12 testing getDeathMessage() \n";
-     Phil.getDeathMessage();
-     if(Phil.getDeathMessage() != "im ded")
+    std::cout<< "Boss Test 7/10: fight, player dies \n";
+    bossTest = Boss("bossTest", 10, 20, 0, "deathmessage");
+    playerTest = Player("playerTest", 10, 5, 5, 0);
+    
+    playerTest.fight(playerTest, bossTest);
+
+    std::cout<< "Boss Test 8/10: receive attack \n";
+    bossTest = Boss("bossTest", 10, 10, 10, "deathmessage");
+    bossTest.receiveAttack(10);
+    if (bossTest.getCurrentArmour() != 0)
+    {
+        return 1;
+    }
+
+     std::cout<< "Boss Test 9/10: getDeathMessage() \n";
+     bossTest = Boss("bosstest", 0, 0, 0, "deathmessage");
+     bossTest.getDeathMessage();
+     if(bossTest.getDeathMessage() != "deathmessage")
      {
         return 1;
      }
 
-     std::cout<< "Test 13 testing attack() \n";
-     Player J("J", 10, 15, 20, 0);
-     Phil.attack(J);
-     if(J.getCurrentArmour() != 15)
+     std::cout<< "Boss Test 10/10: attack() \n";
+     bossTest = Boss("bossTest", 10, 10, 0, "deathmessage");
+     playerTest = Player("playerTest", 10, 10, 0, 0);
+     bossTest.attack(playerTest);
+     if(playerTest.getCurrentArmour() != 0)
+     {
+        return 1;
+     }
+     if(playerTest.getCurrentArmour() != 10)
      {
         return 1;
      }

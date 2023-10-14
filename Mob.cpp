@@ -43,16 +43,6 @@ int Mob::getBaseDamage()
     return baseDamage;
 };
 
-int Mob::getCurrentDamage()
-{
-    return currentDamage;
-}
-
-void Mob::setCurrentDamage(int newDamage)
-{
-    currentDamage = newDamage;
-}
-
 void Mob::takeDamage(int damage)
 {
     std::cout << currentArmour << " " << damage << "\n";
