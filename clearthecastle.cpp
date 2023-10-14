@@ -195,7 +195,27 @@ Player characterSelection() {
         refresh();
 
         char name[100];
-        getstr(name);
+        int nameIndex = 0;
+        int ch;
+        while (1) {
+          ch = getch();
+
+          if (ch == '\n' || ch == '\r') {
+              break; // Exit the loop on Enter key
+          } else if (ch == 127 && nameIndex > 0) {
+              // Handle backspace (ASCII 127) to delete the last character
+              nameIndex--;
+              name[nameIndex] = '\0';
+          } else if (nameIndex < 99) {
+              name[nameIndex] = ch;
+              nameIndex++;
+              name[nameIndex] = '\0';
+          }
+
+          clear();
+          printw("Enter your character name: %s", name);
+          refresh();
+        }
         newCharacter.name = std::string(name);
 
         // clear();
