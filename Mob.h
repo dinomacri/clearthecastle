@@ -20,10 +20,17 @@ class Mob : public Entity
     // member functions
     int getBaseHealth();
     int getCurrentHealth();
+
     void takeDamage(int damage);
 
     int getBaseArmour();
-    
+    int getCurrentArmour();
+
+    // for testing purposes only
+    void setCurrentArmour(int newArmour);
+    void setCurrentHealth(int newHealth);
+
+        
     int getBaseDamage();
 
     void fight(Mob& target_player, Mob& target_boss);

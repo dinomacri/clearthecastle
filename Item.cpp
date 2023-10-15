@@ -25,12 +25,6 @@ Item::~Item()
     logger.print_debug("~Item() called: " + getName() + " was destroyed\n");
 }
 
-
-std::string Item::getName()
-{
-    return name;
-}
-
 int Item::getHealthBonus()
 {
     return healthBonus;

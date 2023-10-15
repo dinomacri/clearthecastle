@@ -18,10 +18,25 @@ int Mob::getCurrentHealth()
     return currentHealth;
 }
 
+void Mob::setCurrentHealth(int newHealth)
+{
+    currentHealth = newHealth;
+}
+
 int Mob::getBaseArmour()
 {
     return baseArmour;
 };
+
+int Mob::getCurrentArmour()
+{
+    return currentArmour;
+}
+
+void Mob::setCurrentArmour(int newArmour)
+{
+    currentArmour = newArmour;
+}
 
 int Mob::getBaseDamage()
 {
@@ -36,10 +51,10 @@ void Mob::takeDamage(int damage)
         currentArmour =  currentArmour - damage;
         
         std::cout << name << "'s Armour has protected their health but taken " << damage << " damage. Remaining Armour: " << currentArmour << "\n";
-    };
+    }
 
     // no armour, health takes all the damage
-    if (currentArmour <= 0)
+    else if (currentArmour <= 0)
     {
          currentHealth = currentHealth -  damage;
         std::cout << name << "'s Armour is depleted, their health has taken " << damage << " damage. Remaining Health: " << currentHealth << "\n";
@@ -84,9 +99,7 @@ void Mob::fight(Mob& target_player, Mob& target_boss)
             {
                 std::cout << target_boss_casted.getDeathMessage() << std::endl;
                 std::cout << target_boss.getName() << " is slain." << std::endl;
-                std::cout << "\n";
                 bossAlive = false;
-                sleep(1);
                 return;
             }
         }
@@ -99,8 +112,8 @@ void Mob::fight(Mob& target_player, Mob& target_boss)
             if (!(target_player.getCurrentHealth() > 0))
             {
                 std::cout << "You died!" << std::endl;
-                playerAlive = false;
-                return;
+                sleep(1);
+                exit(0);
             }
         }
     }

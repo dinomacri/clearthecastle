@@ -41,7 +41,7 @@ Boss::Boss(std::string name, int baseHealth, int baseDamage, int baseArmour, std
 // Boss attacks Player
 void Boss::attack(Mob& target)
 {
-    target.receiveAttack(5);
+    target.receiveAttack(this->getBaseDamage());
 };
 
 // Result of Player attacking Boss

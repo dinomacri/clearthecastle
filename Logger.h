@@ -12,5 +12,6 @@ class Logger {
 
         void print(const std::string& message);
         void print_debug(const std::string& message);
+        void print_error(const std::string& message);
 };
 #endif

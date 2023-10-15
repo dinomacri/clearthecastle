@@ -22,16 +22,17 @@ Player::Player(std::string _name, int _baseHealth, int _baseDamage, int _baseArm
     inventory.fill(Item("empty",0,0,0,0));
 }
 
+// Player attacks Boss
 void Player::attack(Mob& target)
 {
     std::cout << std::endl;
     std::cout << "You attack " << target.getName() << std::endl;
-    target.receiveAttack(5);
+    target.receiveAttack(this->getTotalDamage());
 }
 
+// Boss attacks player
 void Player::receiveAttack(int damage)
 {
-    std::cout << std::endl;
     this->takeDamage(damage);
     std::cout << "Boss has struck you for " << damage << " damage !" << std::endl;
     std::cout << this->getName() << "'s health is now: " << this->getCurrentHealth() << std::endl;
