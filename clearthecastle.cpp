@@ -150,7 +150,6 @@ int menu() {
     }
 }
 
-
 Player characterSelection() {
     // enum CharacterType { WIZARD, WARRIOR, MONK };
 
@@ -165,6 +164,7 @@ Player characterSelection() {
     Character newCharacter;
 
     Player player;
+    int * terminal_window = getTerminalSize();
     // player selects Load
     if (menu() == 0) {
         logger.print("Loading from file");
@@ -190,13 +190,14 @@ Player characterSelection() {
     // player selects New
     else {
         clear();
-        printw("Enter your character name: ");
+
         refresh();
 
-        char name[100];
+        char name[7];
         int nameIndex = 0;
         int ch;
         while (1) {
+          mvprintw(10, 10, "Enter characters name: ");
           ch = getch();
 
           if (ch == '\n' || ch == '\r') {
@@ -212,7 +213,7 @@ Player characterSelection() {
           }
 
           clear();
-          printw("Enter your character name: %s", name);
+          mvprintw(10, 10+25, name);
           refresh();
         }
         newCharacter.name = std::string(name);
@@ -321,6 +322,73 @@ Player characterSelection() {
         return player;
 }
 
+int selectOption(Player player) {
+    initscr();
+    noecho();
+    keypad(stdscr, TRUE);
+    curs_set(0); // Hide the cursor
+
+    int currentOption = 0;
+    int x, y;
+    int maxX, maxY;
+    std::string options[] = {"Attack", "Map", "Inventory"};
+    int numOptions = 3;
+    getmaxyx(stdscr, maxY, maxX);
+
+    while (true) {
+        clear();
+        mvprintw((maxY/2)-4, (maxX/2)-9 ,"What will you do?");
+        for (int i = 0; i < 39; i++) {
+          mvprintw((maxY / 2) - 2, ((maxX / 2) - 20) + i, "=");
+        }
+        // Display the options with the currently selected option highlighted
+        for (int i = 0; i < numOptions; i++) {
+            if (i == currentOption) {
+                attron(A_REVERSE); // Highlight the selected option
+                mvprintw((maxY / 2)+1, (maxX / 2) - ((options[i].length() + 2) * numOptions / 2) + (i * (options[i].length() + 2)) - 4, "[ %s ]", options[i].c_str());
+                attroff(A_REVERSE);
+            } else {
+                mvprintw((maxY / 2)+1, (maxX / 2) - ((options[i].length() + 2) * numOptions / 2) + (i * (options[i].length() + 2)) - 4, "[ %s ]", options[i].c_str());
+            }
+        }
+
+        refresh();
+        int choice = getch();
+
+        if (choice == KEY_RIGHT) {
+            currentOption = (currentOption + 1) % numOptions;
+        } else if (choice == KEY_LEFT) {
+            currentOption = (currentOption - 1 + numOptions) % numOptions;
+        } else if (choice == 10) {  // Enter key
+            if (currentOption == 0) {
+              endwin();
+            } else if (currentOption == 1) {
+              std::cout << "View Map" << "\n";
+              getch();
+            } else {
+              clear();
+              mvprintw((maxY / 2)-4, ((maxX / 2) - 4), "Inventory");
+              for (int i = 0; i < 40; i++) {
+                mvprintw((maxY / 2) - 3, ((maxX / 2) - 20) + i, "=");
+                mvprintw((maxY / 2) + 3, ((maxX / 2) - 20) + i, "=");
+              }
+
+              for (int i = 0; i < 5; i++) {
+                mvprintw((maxY/2)-2+i, (maxX/2)-7,"|");
+                mvprintw((maxY/2)-2+i, (maxX/2)+7,"|");
+              }
+
+
+
+              
+              mvprintw((maxY / 2)+5, ((maxX / 2) - 14), "[ Press any key to return ]");
+              getch();
+            }
+            
+        }
+    }
+}
+
 void mainGameLoop(Player* player) {
   // All initialisation might go into initialise() function later
 
@@ -344,6 +412,9 @@ void mainGameLoop(Player* player) {
   // Begin story
   room1.enterRoom(*player);
   sleep(1);
+
+  selectOption(*player); // GIVING PLAYER CHOICE ON WHAT TO DO.
+
   room2.enterRoom(*player);
   sleep(1);
 
@@ -351,6 +422,7 @@ void mainGameLoop(Player* player) {
   std::cout << "players total damage is " << player->getTotalDamage() << std::endl;
   std::cout << "\n";
 }
+
 
 int main(void) {
 
