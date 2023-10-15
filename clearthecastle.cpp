@@ -361,7 +361,7 @@ int selectOption(Player player) {
             currentOption = (currentOption - 1 + numOptions) % numOptions;
         } else if (choice == 10) {  // Enter key
             if (currentOption == 0) {
-              endwin();
+              endwin(); return 0;
             } else if (currentOption == 1) {
               std::cout << "View Map" << "\n";
               getch();
@@ -377,10 +377,6 @@ int selectOption(Player player) {
                 mvprintw((maxY/2)-2+i, (maxX/2)-7,"|");
                 mvprintw((maxY/2)-2+i, (maxX/2)+7,"|");
               }
-
-
-
-              
               mvprintw((maxY / 2)+5, ((maxX / 2) - 14), "[ Press any key to return ]");
               getch();
             }
