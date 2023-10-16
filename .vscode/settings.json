@@ -67,5 +67,8 @@
         "fstream": "cpp",
         "iomanip": "cpp",
         "stack": "cpp"
-    }
+    },
+    "cSpell.words": [
+        "lncurses"
+    ]
 }
