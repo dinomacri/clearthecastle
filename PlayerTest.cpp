@@ -21,23 +21,23 @@ int main()
     Boss bossTest;
 
     // Print the armour to the console
-    std::cout<< "Player Test 1/11: getBaseArmour() \n";
+    std::cout<< "Player Test 1/11: getCurrentArmour() \n";
     playerTest = Player("playerTest", 0, 0, 10, 0);
-    if (playerTest.getBaseArmour() != 10)
+    if (playerTest.getCurrentArmour() != 10)
     {
         return 1;
     }
 
-    std::cout<< "Player Test 2/11: getBaseHealth() \n";
+    std::cout<< "Player Test 2/11: getCurrentHealth() \n";
     playerTest = Player("playerTest", 10, 0, 0, 0);
-    if (playerTest.getBaseHealth() != 10)
+    if (playerTest.getCurrentHealth() != 10)
     {
         return 1;
     }
     
     std::cout<< "Player Test 3/11: getBaseDamage() \n";
     playerTest = Player("playerTest", 0, 10, 0, 0);
-    if (playerTest.getBaseDamage() != 10)
+    if (playerTest.getCurrentDamage() != 10)
     {
         return 1;
     }
@@ -154,7 +154,7 @@ int main()
 
     std::cout<< "Player Test 11/11: print inventory() \n";
     playerTest = Player("playerTest", 0, 0, 0, 0);
-    Item* itemTest = new Item("testItem", 0, 0, 0, 0);
+    Item* itemTest = new Item("testItem", 0, 0, 0);
 
     // redirect std::cin to a custom stream
     std::istringstream inputStringStream("2");

@@ -16,11 +16,12 @@ class Player: public Mob
     public:
     Player();
     Player(std::string _name, int _baseHealth, int _baseDamage, int _baseArmour, int _specialAbility);
-    Item getInventorySlot(int index);
+    Item& getInventorySlot(int index);
     void printInventory();
-    int getTotalHealth();
     int getTotalDamage();
     int getTotalArmour();
+
+    void takeDamage(int damage);
     
     void equipItem(Item* item);
 

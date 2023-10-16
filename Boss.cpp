@@ -10,11 +10,10 @@ extern Logger logger;
 Boss::Boss()
 {
     name = "";
-    baseHealth = 0;
-    baseDamage = 0;
-    baseArmour = 0;
+    currentHealth = 0;
+    currentDamage = 0;
+    currentArmour = 0;
     deathMessage = "";
-    // int xCord, yCord, baseHealth, baseDamage, baseArmour = 0;
 };
 
 Boss::~Boss()
@@ -26,10 +25,6 @@ Boss::~Boss()
 Boss::Boss(std::string name, int baseHealth, int baseDamage, int baseArmour, std::string deathMessage)
 {
     this->name = name;
-    this-> baseHealth = baseHealth;
-    this -> baseDamage = baseDamage;
-    this -> baseArmour = baseArmour;
-    // setting current stats equal to base stats when created
     currentHealth = baseHealth;
     currentDamage = baseDamage;
     currentArmour = baseArmour;
@@ -41,7 +36,7 @@ Boss::Boss(std::string name, int baseHealth, int baseDamage, int baseArmour, std
 // Boss attacks Player
 void Boss::attack(Mob& target)
 {
-    target.receiveAttack(this->getBaseDamage());
+    target.receiveAttack(this->getCurrentDamage());
 };
 
 // Result of Player attacking Boss

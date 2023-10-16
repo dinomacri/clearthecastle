@@ -3,15 +3,10 @@
 #include <string>
 
 #include "Boss.h"
+#include "Player.h"
 
 // #include <windows.h> for windows clients. 
 #include <unistd.h>
-
-// its  getters and setters
-int Mob::getBaseHealth()
-{
-    return baseHealth;
-};
 
 int Mob::getCurrentHealth()
 {
@@ -23,14 +18,14 @@ void Mob::setCurrentHealth(int newHealth)
     currentHealth = newHealth;
 }
 
-int Mob::getBaseArmour()
-{
-    return baseArmour;
-};
-
 int Mob::getCurrentArmour()
 {
     return currentArmour;
+}
+
+int Mob::getCurrentDamage()
+{
+    return currentDamage;
 }
 
 void Mob::setCurrentArmour(int newArmour)
@@ -38,15 +33,10 @@ void Mob::setCurrentArmour(int newArmour)
     currentArmour = newArmour;
 }
 
-int Mob::getBaseDamage()
-{
-    return baseDamage;
-};
-
 void Mob::takeDamage(int damage)
 {
-    std::cout << currentArmour << " " << damage << "\n";
-     if (currentArmour >= damage)
+    // Calculate damage and armour for player's. 
+    if (currentArmour >= damage)
     {
         currentArmour =  currentArmour - damage;
         
@@ -56,17 +46,17 @@ void Mob::takeDamage(int damage)
     // no armour, health takes all the damage
     else if (currentArmour <= 0)
     {
-         currentHealth = currentHealth -  damage;
+        currentHealth = currentHealth -  damage;
         std::cout << name << "'s Armour is depleted, their health has taken " << damage << " damage. Remaining Health: " << currentHealth << "\n";
-    };
+    }
 
     //armour and health take damage
-    if ((currentArmour < damage) && (currentArmour > 0))
+    else if (currentArmour > 0)
     {
-        int A = currentArmour - damage;
-        currentHealth = currentHealth + A;
+        int remainingDamage = damage - currentArmour;
         currentArmour = 0;
-        std::cout << name << "'s Armour was depleted by the attack, their health has taken " << -A << " damage. Remaining Health: " << currentHealth << "\n";
+        currentHealth = currentHealth - remainingDamage;
+        std::cout << name << "'s Armour was depleted by the attack, their health has taken " << remainingDamage << " damage. Remaining Health: " << currentHealth << "\n";
     };
 };
 

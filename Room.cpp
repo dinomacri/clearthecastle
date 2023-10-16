@@ -86,7 +86,7 @@ void Room::addItem(Item* item)
 
 Boss* Room::getBoss(int index)
 {
-    if (index >= 0 && index < bosses.size())
+    if (index >= 0 && index < static_cast<int>(bosses.size()))
     {
         return bosses[index];
     }
@@ -95,7 +95,7 @@ Boss* Room::getBoss(int index)
 
 Item* Room::getItem(int index)
 {
-    if (index >= 0 && index < items.size())
+    if (index >= 0 && index < static_cast<int>(items.size()))
     {
         return items[index];
     }

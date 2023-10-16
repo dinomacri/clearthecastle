@@ -15,26 +15,26 @@ int main()
     Player playerTest;
     Boss bossTest;
 
-    std::cout<< "Boss Test 1/10: getBaseArmour() \n";
+    std::cout<< "Boss Test 1/10: getCurrentArmour() \n";
     bossTest = Boss("bossTest", 0, 0, 10, "deathmessage");
-    std::cout << bossTest.getBaseArmour() << std::endl;
-    if (bossTest.getBaseArmour() != 10)
+    std::cout << bossTest.getCurrentArmour() << std::endl;
+    if (bossTest.getCurrentArmour() != 10)
     {
         return 1;
     }
 
-    std::cout<< "Boss Test 2/10: getBaseHealth() \n";
+    std::cout<< "Boss Test 2/10: getCurrentHealth() \n";
     bossTest = Boss("bossTest", 10, 0, 0, "deathmessage");
-    std::cout << bossTest.getBaseHealth() << std::endl;
-    if (bossTest.getBaseHealth() != 10)
+    std::cout << bossTest.getCurrentHealth() << std::endl;
+    if (bossTest.getCurrentHealth() != 10)
     {
         return 1;
     }
     
-    std::cout<< "Boss Test 3/10: getBaseDamage() \n";
+    std::cout<< "Boss Test 3/10: getCurrentDamage() \n";
     bossTest = Boss("bossTest", 0, 10, 0, "deathmessage");
-    std::cout << bossTest.getBaseDamage() << std::endl;
-    if (bossTest.getBaseDamage() != 10)
+    std::cout << bossTest.getCurrentDamage() << std::endl;
+    if (bossTest.getCurrentDamage() != 10)
     {
         return 1;
     }
@@ -123,13 +123,13 @@ int main()
 
      std::cout<< "Boss Test 10/10: attack() \n";
      bossTest = Boss("bossTest", 10, 10, 0, "deathmessage");
-     playerTest = Player("playerTest", 10, 10, 0, 0);
+     playerTest = Player("playerTest", 10, 10, 10, 0);
      bossTest.attack(playerTest);
      if(playerTest.getCurrentArmour() != 0)
      {
         return 1;
      }
-     if(playerTest.getCurrentArmour() != 10)
+     if(playerTest.getCurrentHealth() != 10)
      {
         return 1;
      }

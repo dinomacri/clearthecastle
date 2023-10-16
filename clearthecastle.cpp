@@ -246,10 +246,10 @@ Player characterSelection() {
         // character.type = static_cast<CharacterType>(typeChoice - 1);
         
         clear();
-        printw("Distribute 10 points between Health, Damage, and Special Attribute:\n");
+        printw("Distribute ", totalBaseAttributes ," points between Health, Damage, and Special Attribute:\n");
         refresh();
 
-        int pointsRemaining = 10;
+        int pointsRemaining = totalBaseAttributes;
         while (pointsRemaining > 0) {
             clear();
             printw("Points remaining: %d\n", pointsRemaining);
@@ -321,9 +321,9 @@ Player characterSelection() {
         printw("Character created!\n");
         printw("Name: %s\n", player.getName().c_str());
         // printw("Type: %s\n", player.type == WIZARD ? "Wizard" : (player.type == WARRIOR ? "Warrior" : "Monk"));
-        printw("Health: %d\n", player.getBaseHealth());
-        printw("Strength: %d\n", player.getBaseDamage());
-        printw("Armour: %d\n", player.getBaseArmour());
+        printw("Health: %d\n", player.getCurrentHealth());
+        printw("Strength: %d\n", player.getCurrentDamage());
+        printw("Armour: %d\n", player.getCurrentArmour());
         // printw("Special Attribute: %d\n", player.getBaseSpecial());
         refresh();
 
@@ -341,11 +341,11 @@ void mainGameLoop(Player* player) {
   Room room3("Room 3");
 
   // Initialise bosses
-  Boss* boss1 = new Boss("geoff", 20, 10, 10, "NOOOOOO!");
-  Boss* boss2 = new Boss("frank", 100, 10, 5, "you will not get away with this!");
+  Boss* boss1 = new Boss("geoff", 20, 3, 5, "NOOOOOO!");
+  Boss* boss2 = new Boss("frank", 30, 5, 10, "you will not get away with this!");
 
   // Initialise items
-  Item* item1 = new Item("Wooden sword", 10, 0, 0, 0);
+  Item* item1 = new Item("Wooden sword", 10, 0, 0);
 
   // Place bosses and items in rooms
   room1.addBoss(boss1);
@@ -357,10 +357,6 @@ void mainGameLoop(Player* player) {
   sleep(1);
   room2.enterRoom(*player);
   sleep(1);
-
-  std::cout << "players base damage is " << player->getBaseDamage() << std::endl;
-  std::cout << "players total damage is " << player->getTotalDamage() << std::endl;
-  std::cout << "\n";
 }
 
 int main(void) {

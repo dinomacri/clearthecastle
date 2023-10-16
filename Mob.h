@@ -9,29 +9,28 @@ class Mob : public Entity
 
     protected:
     //member variables
-    int baseHealth;
-    int baseDamage;
-    int baseArmour;
+    // int baseHealth;
+    // int baseDamage;
+    // int baseArmour;
     int currentArmour;
     int currentHealth;
     int currentDamage;
 
     public:
     // member functions
-    int getBaseHealth();
+    // int getBaseHealth();
     int getCurrentHealth();
 
-    void takeDamage(int damage);
+    virtual void takeDamage(int damage);
 
-    int getBaseArmour();
+    // int getBaseArmour();
     int getCurrentArmour();
+
+    int getCurrentDamage();
 
     // for testing purposes only
     void setCurrentArmour(int newArmour);
     void setCurrentHealth(int newHealth);
-
-        
-    int getBaseDamage();
 
     void fight(Mob& target_player, Mob& target_boss);
     virtual void attack(Mob& target) = 0;
