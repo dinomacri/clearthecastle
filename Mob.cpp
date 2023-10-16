@@ -3,15 +3,13 @@
 #include <string>
 
 #include "Boss.h"
+#include "Player.h"
+#include "Logger.h"
+
+extern Logger logger;
 
 // #include <windows.h> for windows clients. 
 #include <unistd.h>
-
-// its  getters and setters
-int Mob::getBaseHealth()
-{
-    return baseHealth;
-};
 
 int Mob::getCurrentHealth()
 {
@@ -23,14 +21,14 @@ void Mob::setCurrentHealth(int newHealth)
     currentHealth = newHealth;
 }
 
-int Mob::getBaseArmour()
-{
-    return baseArmour;
-};
-
 int Mob::getCurrentArmour()
 {
     return currentArmour;
+}
+
+int Mob::getCurrentDamage()
+{
+    return currentDamage;
 }
 
 void Mob::setCurrentArmour(int newArmour)
@@ -38,35 +36,33 @@ void Mob::setCurrentArmour(int newArmour)
     currentArmour = newArmour;
 }
 
-int Mob::getBaseDamage()
-{
-    return baseDamage;
-};
-
 void Mob::takeDamage(int damage)
 {
-    std::cout << currentArmour << " " << damage << "\n";
-     if (currentArmour >= damage)
+    // Calculate damage and armour for player's. 
+    if (currentArmour >= damage)
     {
         currentArmour =  currentArmour - damage;
         
-        std::cout << name << "'s Armour has protected their health but taken " << damage << " damage. Remaining Armour: " << currentArmour << "\n";
+        std::cout << name << "'s armour has protected their health but taken " << damage << " damage. Remaining Armour: " << currentArmour << "\n";
+        sleep(1);
     }
 
     // no armour, health takes all the damage
     else if (currentArmour <= 0)
     {
-         currentHealth = currentHealth -  damage;
-        std::cout << name << "'s Armour is depleted, their health has taken " << damage << " damage. Remaining Health: " << currentHealth << "\n";
-    };
+        currentHealth = currentHealth -  damage;
+        std::cout << name << "'s armour is depleted, their health has taken " << damage << " damage. Remaining Health: " << currentHealth << "\n";
+        sleep(1);
+    }
 
     //armour and health take damage
-    if ((currentArmour < damage) && (currentArmour > 0))
+    else if (currentArmour > 0)
     {
-        int A = currentArmour - damage;
-        currentHealth = currentHealth + A;
+        int remainingDamage = damage - currentArmour;
         currentArmour = 0;
-        std::cout << name << "'s Armour was depleted by the attack, their health has taken " << -A << " damage. Remaining Health: " << currentHealth << "\n";
+        currentHealth = currentHealth - remainingDamage;
+        std::cout << name << "'s armour was depleted by the attack, their health has taken " << remainingDamage << " damage. Remaining Health: " << currentHealth << "\n";
+        sleep(1);
     };
 };
 
@@ -84,6 +80,18 @@ void Mob::fight(Mob& target_player, Mob& target_boss)
         exit(1);
     }
 
+    // cast target_player from Mob to Player, in order to access printInventory().
+    Player target_player_casted;
+    try {
+        // Verify that Mob pointer is a Boss
+        target_player_casted = dynamic_cast<Player&>(target_player);
+        // If we reach this point, target_boss is a valid Boss object
+        // You can use 'boss' safely in this block.
+    } catch (const std::bad_cast&) {
+        std::cout << "fight(Mob& target) was passed a non-Player type" << std::endl;
+        exit(1);
+    }
+
     bool bossAlive = true;
     bool playerAlive = true;
     
@@ -91,30 +99,49 @@ void Mob::fight(Mob& target_player, Mob& target_boss)
 
     while (bossAlive == true && playerAlive==true)
     {
-        // player attacks boss
-        if (bossAlive == true)
-        {
-            attack(target_boss);
-            if (!(target_boss.getCurrentHealth() > 0))
-            {
-                std::cout << target_boss_casted.getDeathMessage() << std::endl;
-                std::cout << target_boss.getName() << " is slain." << std::endl;
-                bossAlive = false;
-                return;
-            }
-        }
+        logger.print_bold("\n-> PROMPT: Enter [A]ttack, [M]ap or [I]nventory: ");
+        char choice;
+        std::cin >> choice;   
         sleep(1);
-
-        // boss attacks player
-        if (playerAlive == true)
+        std::cout << "\n";
+        if (choice == 'A' || choice == 'a')
         {
-            target_boss.attack(*this);
-            if (!(target_player.getCurrentHealth() > 0))
+            // player attacks boss
+            if (bossAlive == true)
             {
-                std::cout << "You died!" << std::endl;
-                sleep(1);
-                exit(0);
+                attack(target_boss);
+                if (!(target_boss.getCurrentHealth() > 0))
+                {
+                    std::cout << target_boss_casted.getDeathMessage() << std::endl;
+                    std::cout << target_boss.getName() << " is slain." << std::endl;
+                    bossAlive = false;
+                    return;
+                }
+            }
+            sleep(1);
+
+            // boss attacks player
+            if (playerAlive == true)
+            {
+                target_boss.attack(*this);
+                if (!(target_player.getCurrentHealth() > 0))
+                {
+                    std::cout << "You died!\n";
+                    sleep(1);
+                    exit(0);
+                }
             }
         }
+        else if (choice == 'M' || choice == 'm')
+        {
+
+        }
+        else if (choice == 'I' || choice == 'i')
+        {
+            target_player_casted.printInventory();
+        }
+
+
+
     }
 }

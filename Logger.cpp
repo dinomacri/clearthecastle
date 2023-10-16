@@ -14,23 +14,39 @@ Logger::Logger(bool _debug)
 }
 
 // ANSI escape codes for text color
-#define RED_TEXT "\033[31m"
-#define GREEN_TEXT "\033[32m"
-#define YELLOW_TEXT "\033[33m"
-#define RESET_TEXT "\033[0m"
+#define BOLD "\e[1;37m"
+#define RED "\033[31m"
+#define RED_BOLD "\e[1;31m"
+#define BLUE "\e[0;34m"
+#define BLUE_BOLD "\e[1;34m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define RESET "\033[0m"
 
 void Logger::print(const std::string& message) {
-    std::cout << message << std::endl;
+    std::cout << message << RESET;
+}
+
+void Logger::print_bold(const std::string& message) {
+    std::cout << BOLD << message << RESET;
+}
+
+void Logger::print_boss(const std::string& message) {
+    std::cout << RED_BOLD << message << RESET;
+}
+
+void Logger::print_player(const std::string& message) {
+    std::cout << BLUE_BOLD << message << RESET;
 }
 
 void Logger::print_debug(const std::string& message) {
     if (debug) {
-        std::cout << YELLOW_TEXT << "DEBUG: " << message << RESET_TEXT << std::endl;
+        std::cout << YELLOW << "DEBUG: " << message << RESET << std::endl;
     }
 }
 void Logger::print_error(const std::string& message) {
         endwin();
-        std::cout << RED_TEXT << "ERROR: " << message << RESET_TEXT << std::endl;
+        std::cout << RED << "ERROR: " << message << RESET << std::endl;
         exit(1);
 
 }

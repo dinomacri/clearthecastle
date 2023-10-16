@@ -18,7 +18,7 @@ CLEAN_FILES = *.gch
 
 # Build, test, run
 .PHONY: all
-all: test
+all:
 
 	$(CXX) -o $(TARGET) $(MAIN_SRC) $(SRCS) $(CXXFLAGS)
 
@@ -41,7 +41,7 @@ notest:
 # Test
 .PHONY: test
 test: 
-	/bin/bash $(TEST_SCRIPT)
+	/bin/bash $(TEST_SCRIPT) && echo "Testing Complete\n"
 
 # Clean rule
 .PHONY: clean

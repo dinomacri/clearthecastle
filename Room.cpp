@@ -28,19 +28,20 @@ Room::~Room()
 
 void Room::enterRoom(Player &player)
 {
-    std::cout << "You enter the next room.\n";
+    logger.print_bold("You enter the next room.\n");
     sleep(1);
 
     // Check if boss in room
     if (this->bossCount() == 0)
     {
-        std::cout << "You relax, as the room seems empty\n";
+        logger.print_bold("You relax, as the room seems empty\n");
+        sleep(1);
     }
     else
     {
         for (int i = 0; i < this->bossCount(); i++) {
         Mob* boss = this->getBoss(i);
-        std::cout << "You see a boss. Get ready for a fight!\n";
+        logger.print_bold("You see a boss. Get ready for a fight!\n");
         sleep(1);
 
         player.fight(player, *boss);
@@ -54,7 +55,7 @@ void Room::enterRoom(Player &player)
     {
         for (int i = 0; i < this->itemCount(); i++)
         {
-            std::cout << "You find an item in the room. Do you want to pick it up? (y/n): ";
+            logger.print_player("You find an item in the room. Do you want to pick it up? (y/n): ");
             char choice;
             std::cin >> choice;
             sleep(1);
@@ -65,7 +66,7 @@ void Room::enterRoom(Player &player)
             }
             else
             {
-                std::cout << "You decide to leave the item alone\n";
+                logger.print_bold("You decide to leave the item alone\n");
                 sleep(1);
             }
             // clear all items from the room
@@ -86,7 +87,7 @@ void Room::addItem(Item* item)
 
 Boss* Room::getBoss(int index)
 {
-    if (index >= 0 && index < bosses.size())
+    if (index >= 0 && index < static_cast<int>(bosses.size()))
     {
         return bosses[index];
     }
@@ -95,7 +96,7 @@ Boss* Room::getBoss(int index)
 
 Item* Room::getItem(int index)
 {
-    if (index >= 0 && index < items.size())
+    if (index >= 0 && index < static_cast<int>(items.size()))
     {
         return items[index];
     }

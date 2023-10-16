@@ -9,19 +9,18 @@
 class Item : public Entity
 {
     private:
-    int healthBonus;
     int damageBonus;
     int armourBonus;
     int specialAttribute;
 
     public:
     Item();
-    Item(std::string _name, int _healthBonus, int _strengthBonus, int _armourBonus, int _specialAttribute);
+    Item(std::string _name, int _damageBonus, int _armourBonus, int _specialAttribute);
     ~Item();
-    int getHealthBonus();
     int getDamageBonus();
     int getArmourBonus();
     int getSpecialAttribute();
+    int takeDamage(int damage);
 };
 
 #endif // ITEM_H
