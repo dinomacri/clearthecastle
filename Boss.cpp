@@ -42,10 +42,7 @@ void Boss::attack(Mob& target)
 // Result of Player attacking Boss
 void Boss::receiveAttack(int damage)
 {
-    std::cout << "He says \"You hit me!!!!\"" << std::endl;
-
     this->takeDamage(damage);
-    std::cout << "You have hit " << this->getName() << " for " << damage << " damage!" << std::endl;
     std::cout << this->getName() << "'s health is now " <<  this->getCurrentHealth() << std::endl;
 };
 

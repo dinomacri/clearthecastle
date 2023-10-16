@@ -4,6 +4,9 @@
 #include "Boss.h"
 #include "Logger.h"
 
+// #include <windows.h> for windows clients. 
+#include <unistd.h>
+
 extern Logger logger;
 
 Player::Player()
@@ -25,17 +28,21 @@ Player::Player(std::string _name, int _baseHealth, int _baseDamage, int _baseArm
 // Player attacks Boss
 void Player::attack(Mob& target)
 {
-    std::cout << std::endl;
     std::cout << "You attack " << target.getName() << std::endl;
+    sleep(1);
     target.receiveAttack(this->getTotalDamage());
+    sleep(1);
 }
 
 // Boss attacks player
 void Player::receiveAttack(int damage)
 {
+    std::cout << "\n";
     this->takeDamage(damage);
-    std::cout << "Boss has struck you for " << damage << " damage !" << std::endl;
-    std::cout << this->getName() << "'s health is now: " << this->getCurrentHealth() << std::endl;
+    logger.print_boss("Boss has struck you for " + std::to_string(damage) + " damage !\n\n");
+    sleep(1);
+    logger.print_player(this->getName() + "'s health is now: " + std::to_string(this->getCurrentHealth()) + "\n");
+    sleep(1);
 }
 
 int Player::getTotalDamage() {
@@ -78,14 +85,14 @@ void Player::takeDamage(int damage) {
     if (currentArmour >= damage)
     {
         currentArmour =  currentArmour - damage;
-        std::cout << name << "'s Armour has protected their health but taken " << damage << " damage. Remaining Armour: " << getTotalArmour() << "\n";
+        std::cout << name << "'s armour has protected their health but taken " << damage << " damage. Remaining Armour: " << getTotalArmour() << "\n";
     }
 
     // no armour, health takes all the damage
     else if (currentArmour <= 0)
     {
         currentHealth = currentHealth -  damage;
-        std::cout << name << "'s Armour is depleted, their health has taken " << damage << " damage. Remaining Health: " << currentHealth << "\n";
+        std::cout << name << "'s armour is depleted, their health has taken " << damage << " damage. Remaining Health: " << currentHealth << "\n";
     }
 
     //armour and health take damage
@@ -94,7 +101,7 @@ void Player::takeDamage(int damage) {
         int remainingDamage = damage - currentArmour;
         currentArmour = 0;
         currentHealth = currentHealth - remainingDamage;
-        std::cout << name << "'s Armour was depleted by the attack, their health has taken " << remainingDamage << " damage. Remaining Health: " << currentHealth << "\n";
+        std::cout << name << "'s armour was depleted by the attack, their health has taken " << remainingDamage << " damage. Remaining Health: " << currentHealth << "\n";
     };
 }
 

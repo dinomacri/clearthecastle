@@ -171,7 +171,7 @@ Player characterSelection() {
     Player player;
     // player selects Load
     if (menu() == 0) {
-        logger.print("Loading from file");
+        logger.print("Loading from file\n");
 
         std::ifstream input(characterFile);
         if (!input.is_open()) {
@@ -299,11 +299,11 @@ Player characterSelection() {
         }
 
         // Save new character to file
-        logger.print("Writing to file");
+        logger.print("Writing to file\n");
 
         std::ofstream output("player.txt");
         if (!output.is_open()) {
-          logger.print_error("Error opening file");
+          logger.print_error("Error opening file\n");
         }
 
         output << newCharacter.name << "\n";
@@ -314,7 +314,7 @@ Player characterSelection() {
 
         output.close();
 
-        logger.print_debug("Data written to file.");
+        logger.print_debug("Data written to file.\n");
     }
         player = Player(newCharacter.name, newCharacter.health, newCharacter.damage, newCharacter.armour, newCharacter.specialAttribute);
 
@@ -354,9 +354,10 @@ void mainGameLoop(Player* player) {
   
   // Begin story
   room1.enterRoom(*player);
-  sleep(1);
+  sleep(2);
   room2.enterRoom(*player);
-  sleep(1);
+  sleep(2);
+  room3.enterRoom(*player);
 }
 
 int main(void) {

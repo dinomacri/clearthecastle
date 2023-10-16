@@ -124,7 +124,8 @@ int main()
     playerTest = Player("playerTest", 100, 100, 0, 0);
     bossTest = Boss("bossTest", 10, 10, 10, "deathmessage");
     playerTest.fight(playerTest, bossTest);
-    std::cout<< "done \n";
+
+    std::cout << "Press A\n";
 
     // Redirect std::cout to a stringstream
     originalOutput = std::cout.rdbuf(outputCapture.rdbuf());
