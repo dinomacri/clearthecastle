@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+
+
 #include "Boss.h"
 #include "Player.h"
 #include "Logger.h"
@@ -25,7 +27,7 @@ Boss::~Boss()
 Boss::Boss(std::string name, int baseHealth, int baseDamage, int baseArmour, std::string deathMessage)
 {
     this->name = name;
-    currentHealth = baseHealth;
+    currentHealth = baseHealth;  
     currentDamage = baseDamage;
     currentArmour = baseArmour;
 

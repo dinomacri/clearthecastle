@@ -33,6 +33,7 @@ void startupMessage() {
   /* INITIALISATION and ARGUMENTS */
   const char *title[] = {" _____ _                   _   _               ","/  __ \\ |                 | | | |             ","| /  \\/ | ___  __ _ _ __  | |_| |__   ___     ","| |   | |/ _ \\/ _` | '__| | __| '_ \\ / _ \\  ","| \\__/\\ |  __/ (_| | |    | |_| | | |  __/   "," \\____/_|\\___|\\__,_|_|     \\__|_| |_|\\___|","        _____           _   _                  ","       /  __ \\         | | | |                ","       | /  \\/ __ _ ___| |_| | ___            ","       | |    / _` / __| __| |/ _ \\           ","       | \\__/\\ (_| \\__ \\ |_| |  __/        ","        \\____/\\__,_|___/\\__|_|\\___| 0.0.1     "};
   const char *sword[] = {"             />","            /<","           /<"," |\\_______{o}----------------------------------------------------------_","[\\\\\\\\\\\\\\{*}:::<=============================================-           >"," |/~~~~~~~{o}----------------------------------------------------------~","           \\>","            \\>","             \\>"};
+  
 
   int* terminal_window = getTerminalSize(); // Returns [rows, cols]
 
@@ -164,7 +165,7 @@ Player characterSelection() {
         int health=0;
         int damage=0;
         int armour=0;
-        int specialAttribute=0;
+      
     };
     Character newCharacter;
 
@@ -181,9 +182,9 @@ Player characterSelection() {
 
         std::string line1, line2, line3, line4, line5;
 
-        while(input >> line1 >> line2 >> line3 >> line4 >> line5)
+        while(input >> line1 >> line2 >> line3 >> line4)
         {
-            if ((std::stoi(line2) + std::stoi(line3) + std::stoi(line4) + std::stoi(line5)) > totalBaseAttributes )
+            if ((std::stoi(line2) + std::stoi(line3) + std::stoi(line4)) > totalBaseAttributes )
             {
                 logger.print_error("The total attributes in " + characterFile + " exceed " + std::to_string(totalBaseAttributes) + ". Ensure total attributes add up to 30.");
 
@@ -193,7 +194,7 @@ Player characterSelection() {
             newCharacter.health = std::stoi(line2);
             newCharacter.damage = std::stoi(line3);
             newCharacter.armour = std::stoi(line4);
-            newCharacter.specialAttribute = std::stoi(line5);
+            
         }
 
         input.close();
@@ -228,25 +229,10 @@ Player characterSelection() {
         }
         newCharacter.name = std::string(name);
 
-        // clear();
-        // printw("Choose your character type:\n");
-        // printw("1. Wizard\n");
-        // printw("2. Warrior\n");
-        // printw("3. Monk\n");
-        // refresh();
-
-        // int typeChoice;
-        // while (1) {
-        //     typeChoice = getch() - '0';
-        //     if (typeChoice >= 1 && typeChoice <= 3) {
-        //         break;
-        //     }
-        // }
-        // Set character type to user's input
-        // character.type = static_cast<CharacterType>(typeChoice - 1);
+       
         
         clear();
-        printw("Distribute ", totalBaseAttributes ," points between Health, Damage, and Special Attribute:\n");
+        printw("Distribute ", totalBaseAttributes ," points between Health, Armour and Damage:\n");
         refresh();
 
         int pointsRemaining = totalBaseAttributes;
@@ -256,13 +242,14 @@ Player characterSelection() {
             printw("1. Health: %d\n", newCharacter.health);
             printw("2. Damage: %d\n", newCharacter.damage);
             printw("3. Armour: %d\n", newCharacter.armour);
-            printw("4. Special Attribute: %d\n", newCharacter.specialAttribute);
+         
             refresh();
 
             int attributeChoice;
             while (1) {
                 attributeChoice = getch() - '0';
-                if (attributeChoice >= 1 && attributeChoice <= 4) {
+                if (attributeChoice >= 1 && attributeChoice <= 3) {
+                  
                     break;
                 }
             }
@@ -278,9 +265,7 @@ Player characterSelection() {
                 case 3:
                     attributeToUpdate = &newCharacter.armour;
                     break;
-                case 4:
-                    attributeToUpdate = &newCharacter.specialAttribute;
-                    break;
+              
             }
 
             clear();
@@ -310,27 +295,28 @@ Player characterSelection() {
         output << newCharacter.health << "\n";
         output << newCharacter.damage << "\n";
         output << newCharacter.armour << "\n";
-        output << newCharacter.specialAttribute << "\n";
+       
 
         output.close();
 
         logger.print_debug("Data written to file.\n");
     }
-        player = Player(newCharacter.name, newCharacter.health, newCharacter.damage, newCharacter.armour, newCharacter.specialAttribute);
+        player = Player(newCharacter.name, newCharacter.health, newCharacter.damage, newCharacter.armour);
 
         printw("Character created!\n");
         printw("Name: %s\n", player.getName().c_str());
         // printw("Type: %s\n", player.type == WIZARD ? "Wizard" : (player.type == WARRIOR ? "Warrior" : "Monk"));
         printw("Health: %d\n", player.getCurrentHealth());
-        printw("Strength: %d\n", player.getCurrentDamage());
+        printw("Damage: %d\n", player.getCurrentDamage());
         printw("Armour: %d\n", player.getCurrentArmour());
-        // printw("Special Attribute: %d\n", player.getBaseSpecial());
+        
         refresh();
 
         getch();
 
         return player;
 }
+
 
 void mainGameLoop(Player* player) {
   // All initialisation might go into initialise() function later
@@ -342,7 +328,7 @@ void mainGameLoop(Player* player) {
 
   // Initialise bosses
   Boss* boss1 = new Boss("geoff", 20, 3, 5, "NOOOOOO!");
-  Boss* boss2 = new Boss("frank", 30, 5, 10, "you will not get away with this!");
+  Boss* boss2 = new Boss("frank", 30, 9, 10, "frank screams, you will not get away with this! With his last breath\nYou have defeated the bosses that have roamed the castles walls for years. Your achievements will be remembered for generations\n");
 
   // Initialise items
   Item* item1 = new Item("Wooden sword", 10, 0, 0);
@@ -358,6 +344,10 @@ void mainGameLoop(Player* player) {
   room2.enterRoom(*player);
   sleep(2);
   room3.enterRoom(*player);
+
+ 
+
+  
 }
 
 int main(void) {

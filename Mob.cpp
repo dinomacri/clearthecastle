@@ -1,15 +1,18 @@
 #include "Mob.h"
 #include <iostream>
 #include <string>
-
 #include "Boss.h"
 #include "Player.h"
 #include "Logger.h"
+//#include <opencv2/opencv.hpp> 
+//using namespace cv; 
+//using namespace std; 
 
 extern Logger logger;
 
-// #include <windows.h> for windows clients. 
+// #include <windows.h> for windows clients.
 #include <unistd.h>
+int killCounter = 0;
 
 int Mob::getCurrentHealth()
 {
@@ -38,11 +41,11 @@ void Mob::setCurrentArmour(int newArmour)
 
 void Mob::takeDamage(int damage)
 {
-    // Calculate damage and armour for player's. 
+    // Calculate damage and armour for player's.
     if (currentArmour >= damage)
     {
-        currentArmour =  currentArmour - damage;
-        
+        currentArmour = currentArmour - damage;
+
         std::cout << name << "'s armour has protected their health but taken " << damage << " damage. Remaining Armour: " << currentArmour << "\n";
         sleep(1);
     }
@@ -50,12 +53,12 @@ void Mob::takeDamage(int damage)
     // no armour, health takes all the damage
     else if (currentArmour <= 0)
     {
-        currentHealth = currentHealth -  damage;
+        currentHealth = currentHealth - damage;
         std::cout << name << "'s armour is depleted, their health has taken " << damage << " damage. Remaining Health: " << currentHealth << "\n";
         sleep(1);
     }
 
-    //armour and health take damage
+    // armour and health take damage
     else if (currentArmour > 0)
     {
         int remainingDamage = damage - currentArmour;
@@ -66,42 +69,55 @@ void Mob::takeDamage(int damage)
     };
 };
 
-void Mob::fight(Mob& target_player, Mob& target_boss)
+/*void Mob::displayMap()
+{
+    Mat image = imread("map.jpg", IMREAD_GRAYSCALE);
+    imshow("Map", image);
+    waitKey(0);
+}*/
+
+void Mob::fight(Mob &target_player, Mob &target_boss)
 {
     // cast target_boss from Mob to Boss, in order to access getDeathMessage().
     Boss target_boss_casted;
-    try {
+    try
+    {
         // Verify that Mob pointer is a Boss
-        target_boss_casted = dynamic_cast<Boss&>(target_boss);
+        target_boss_casted = dynamic_cast<Boss &>(target_boss);
         // If we reach this point, target_boss is a valid Boss object
         // You can use 'boss' safely in this block.
-    } catch (const std::bad_cast&) {
+    }
+    catch (const std::bad_cast &)
+    {
         std::cout << "fight(Mob& target) was passed a non-Boss type" << std::endl;
         exit(1);
     }
 
     // cast target_player from Mob to Player, in order to access printInventory().
     Player target_player_casted;
-    try {
+    try
+    {
         // Verify that Mob pointer is a Boss
-        target_player_casted = dynamic_cast<Player&>(target_player);
+        target_player_casted = dynamic_cast<Player &>(target_player);
         // If we reach this point, target_boss is a valid Boss object
         // You can use 'boss' safely in this block.
-    } catch (const std::bad_cast&) {
+    }
+    catch (const std::bad_cast &)
+    {
         std::cout << "fight(Mob& target) was passed a non-Player type" << std::endl;
         exit(1);
     }
 
     bool bossAlive = true;
     bool playerAlive = true;
-    
+
     sleep(1);
 
-    while (bossAlive == true && playerAlive==true)
+    while (bossAlive == true && playerAlive == true)
     {
         logger.print_bold("\n-> PROMPT: Enter [A]ttack, [M]ap or [I]nventory: ");
         char choice;
-        std::cin >> choice;   
+        std::cin >> choice;
         sleep(1);
         std::cout << "\n";
         if (choice == 'A' || choice == 'a')
@@ -114,6 +130,7 @@ void Mob::fight(Mob& target_player, Mob& target_boss)
                 {
                     std::cout << target_boss_casted.getDeathMessage() << std::endl;
                     std::cout << target_boss.getName() << " is slain." << std::endl;
+                    killCounter++;
                     bossAlive = false;
                     return;
                 }
@@ -134,14 +151,11 @@ void Mob::fight(Mob& target_player, Mob& target_boss)
         }
         else if (choice == 'M' || choice == 'm')
         {
-
+           // displayMap();
         }
         else if (choice == 'I' || choice == 'i')
         {
             target_player_casted.printInventory();
         }
-
-
-
     }
 }

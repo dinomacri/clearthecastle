@@ -3,7 +3,10 @@
 #include "Entity.h"
 #include <iostream>
 #include <string>
-
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <curses.h>
+#include <fstream>
 class Mob : public Entity
 {
 
@@ -15,6 +18,7 @@ class Mob : public Entity
     int currentArmour;
     int currentHealth;
     int currentDamage;
+    
 
     public:
     // member functions
@@ -33,6 +37,7 @@ class Mob : public Entity
     void setCurrentHealth(int newHealth);
 
     void fight(Mob& target_player, Mob& target_boss);
+    //void displayMap();
     virtual void attack(Mob& target) = 0;
     virtual void receiveAttack(int damage) = 0;
 

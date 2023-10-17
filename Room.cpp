@@ -17,8 +17,8 @@ Room::Room(std::string _name)
     name = _name;
 
     // initialise empty vectors
-    items = std::vector<Item*>();
-    bosses = std::vector<Boss*>();
+    items = std::vector<Item *>();
+    bosses = std::vector<Boss *>();
 }
 
 Room::~Room()
@@ -39,13 +39,15 @@ void Room::enterRoom(Player &player)
     }
     else
     {
-        for (int i = 0; i < this->bossCount(); i++) {
-        Mob* boss = this->getBoss(i);
-        logger.print_bold("You see a boss. Get ready for a fight!\n");
-        sleep(1);
+        for (int i = 0; i < this->bossCount(); i++)
+        {
+            Mob *boss = this->getBoss(i);
+            logger.print_bold("You see a boss. Get ready for a fight!\n");
+            sleep(1);
 
-        player.fight(player, *boss);
+            player.fight(player, *boss);
         }
+        
         // clear the bosses from the room
         bosses.clear();
     }
@@ -75,17 +77,17 @@ void Room::enterRoom(Player &player)
     }
 }
 
-void Room::addBoss(Boss* boss)
+void Room::addBoss(Boss *boss)
 {
     bosses.push_back(boss);
 }
 
-void Room::addItem(Item* item)
+void Room::addItem(Item *item)
 {
     items.push_back(item);
 }
 
-Boss* Room::getBoss(int index)
+Boss *Room::getBoss(int index)
 {
     if (index >= 0 && index < static_cast<int>(bosses.size()))
     {
@@ -94,7 +96,7 @@ Boss* Room::getBoss(int index)
     return nullptr;
 }
 
-Item* Room::getItem(int index)
+Item *Room::getItem(int index)
 {
     if (index >= 0 && index < static_cast<int>(items.size()))
     {

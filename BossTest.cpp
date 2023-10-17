@@ -85,7 +85,7 @@ int main()
     }
 
     std::cout<< "Boss Test 6/10: setters() \n";
-    playerTest = Player("playerTest", 0, 0, 0, 0);
+    playerTest = Player("playerTest", 0, 0, 0);
     playerTest.setCurrentArmour(10);
     playerTest.setCurrentHealth(10);
     std::cout << playerTest.getCurrentArmour() << std::endl;
@@ -101,7 +101,7 @@ int main()
 
     std::cout<< "Boss Test 7/10: fight, player dies \n";
     bossTest = Boss("bossTest", 10, 20, 0, "deathmessage");
-    playerTest = Player("playerTest", 10, 5, 5, 0);
+    playerTest = Player("playerTest", 10, 5, 5);
     
     playerTest.fight(playerTest, bossTest);
 
@@ -123,7 +123,7 @@ int main()
 
      std::cout<< "Boss Test 10/10: attack() \n";
      bossTest = Boss("bossTest", 10, 10, 0, "deathmessage");
-     playerTest = Player("playerTest", 10, 10, 10, 0);
+     playerTest = Player("playerTest", 10, 10, 10);
      bossTest.attack(playerTest);
      if(playerTest.getCurrentArmour() != 0)
      {
