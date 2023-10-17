@@ -11,11 +11,11 @@ class Player: public Mob
 {
     protected:
     std::array<Item, 3> inventory; 
-    int specialAbility;
+    
 
     public:
     Player();
-    Player(std::string _name, int _baseHealth, int _baseDamage, int _baseArmour, int _specialAbility);
+    Player(std::string _name, int _baseHealth, int _baseDamage, int _baseArmour);
     Item& getInventorySlot(int index);
     void printInventory();
     int getTotalDamage();

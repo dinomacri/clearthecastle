@@ -10,6 +10,7 @@ extern Logger logger;
 
 // #include <windows.h> for windows clients. 
 #include <unistd.h>
+int killCounter = 0;
 
 int Mob::getCurrentHealth()
 {
@@ -114,7 +115,12 @@ void Mob::fight(Mob& target_player, Mob& target_boss)
                 {
                     std::cout << target_boss_casted.getDeathMessage() << std::endl;
                     std::cout << target_boss.getName() << " is slain." << std::endl;
+                    killCounter++;
                     bossAlive = false;
+                    if(killCounter == 2)
+                    {
+                         std::cout<<"you have defeated the bosses that have roamed the castles walls for years. Your achievements will be remembered for generations \n";
+                    }
                     return;
                 }
             }

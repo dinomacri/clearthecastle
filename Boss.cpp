@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+
+
 #include "Boss.h"
 #include "Player.h"
 #include "Logger.h"
@@ -26,6 +28,8 @@ Boss::Boss(std::string name, int baseHealth, int baseDamage, int baseArmour, std
 {
     this->name = name;
     currentHealth = baseHealth;
+    srand(time(NULL));
+    
     currentDamage = baseDamage;
     currentArmour = baseArmour;
 

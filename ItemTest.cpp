@@ -21,7 +21,7 @@ int main() {
     }
 
     std::cout<< "Item Test 2/3: Check getTotal functions" << std::endl;
-    playerTest = Player("playerTest", 10, 10, 10, 10);
+    playerTest = Player("playerTest", 10, 10, 10);
     itemTest = Item("itemTest", 1, 1, 1);
 
     // redirect std::cin to a custom stream
@@ -47,7 +47,7 @@ int main() {
     // }
 
     std::cout<< "Item Test 3/3: Check getTotal functions with damage" << std::endl;
-    playerTest = Player("playerTest", 10, 0, 10, 0);
+    playerTest = Player("playerTest", 10, 0, 10);
     itemTest = Item("itemTest", 0, 1, 0);
 
     // redirect std::cin to a custom stream
@@ -62,6 +62,7 @@ int main() {
     playerTest.takeDamage(1);
 
     if (playerTest.getCurrentHealth() != 10)
+    
     {
         std::cout << playerTest.getCurrentHealth() << std::endl;
         return 1;

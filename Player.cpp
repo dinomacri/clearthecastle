@@ -11,13 +11,12 @@ extern Logger logger;
 
 Player::Player()
 {
-    Player("default", 1, 1, 1, 1);
+    Player("default", 1, 1, 1);
 };
 
-Player::Player(std::string _name, int _baseHealth, int _baseDamage, int _baseArmour, int _specialAbility)
+Player::Player(std::string _name, int _baseHealth, int _baseDamage, int _baseArmour)
 {
     name = _name;
-    specialAbility = _specialAbility;
     currentHealth = _baseHealth;
     currentDamage = _baseDamage;
     currentArmour = _baseArmour;
@@ -39,7 +38,7 @@ void Player::receiveAttack(int damage)
 {
     std::cout << "\n";
     this->takeDamage(damage);
-    logger.print_boss("Boss has struck you for " + std::to_string(damage) + " damage !\n\n");
+    logger.print_boss("You have been struck for " + std::to_string(damage) + " damage !\n\n");
     sleep(1);
     logger.print_player(this->getName() + "'s health is now: " + std::to_string(this->getCurrentHealth()) + "\n");
     sleep(1);

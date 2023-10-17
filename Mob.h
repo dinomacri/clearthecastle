@@ -15,8 +15,10 @@ class Mob : public Entity
     int currentArmour;
     int currentHealth;
     int currentDamage;
+    
 
     public:
+    int killCounter;
     // member functions
     // int getBaseHealth();
     int getCurrentHealth();

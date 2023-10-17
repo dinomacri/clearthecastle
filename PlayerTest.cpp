@@ -22,35 +22,35 @@ int main()
 
     // Print the armour to the console
     std::cout<< "Player Test 1/11: getCurrentArmour() \n";
-    playerTest = Player("playerTest", 0, 0, 10, 0);
+    playerTest = Player("playerTest", 0, 0, 10);
     if (playerTest.getCurrentArmour() != 10)
     {
         return 1;
     }
 
     std::cout<< "Player Test 2/11: getCurrentHealth() \n";
-    playerTest = Player("playerTest", 10, 0, 0, 0);
+    playerTest = Player("playerTest", 10, 0, 0);
     if (playerTest.getCurrentHealth() != 10)
     {
         return 1;
     }
     
     std::cout<< "Player Test 3/11: getBaseDamage() \n";
-    playerTest = Player("playerTest", 0, 10, 0, 0);
+    playerTest = Player("playerTest", 0, 10, 0);
     if (playerTest.getCurrentDamage() != 10)
     {
         return 1;
     }
 
     std::cout<< "Player Test 4/21: getCurrentHealth() \n";
-    playerTest = Player("playerTest", 10, 0, 0, 0);
+    playerTest = Player("playerTest", 10, 0, 0);
     if (playerTest.getCurrentHealth() != 10)
     {
         return 1;
     }
 
     std::cout<< "Player Test 5/11: takeDamage() health \n";
-    playerTest = Player("playerTest", 10, 0, 0, 0);
+    playerTest = Player("playerTest", 10, 0, 0);
     playerTest.takeDamage(1);
     if (playerTest.getCurrentHealth() != 9)
     {
@@ -58,7 +58,7 @@ int main()
     }
 
     std::cout<< "Player Test 6/11: takeDamage() armour \n";
-    playerTest = Player("playerTest", 10, 0, 5, 0);
+    playerTest = Player("playerTest", 10, 0, 5);
     playerTest.takeDamage(1);
     if (playerTest.getCurrentHealth() != 10)
     {
@@ -71,7 +71,7 @@ int main()
 
     std::cout<< "Player Test 7/11: takeDamage() health and armour \n";
     // damage equals armour
-    playerTest = Player("playerTest", 10, 0, 5, 0);
+    playerTest = Player("playerTest", 10, 0, 5);
     playerTest.takeDamage(5);
     if (playerTest.getCurrentArmour() != 0)
     {
@@ -83,7 +83,7 @@ int main()
     }
 
     // damage exceeds armour
-    playerTest = Player("playerTest", 10, 0, 5, 0);
+    playerTest = Player("playerTest", 10, 0, 5);
     playerTest.takeDamage(10);
     if (playerTest.getCurrentArmour() != 0)
     {
@@ -95,7 +95,7 @@ int main()
     }
 
     // damage exceeds armour and health (kill)
-    playerTest = Player("playerTest", 10, 0, 5, 0);
+    playerTest = Player("playerTest", 10, 0, 5);
     playerTest.takeDamage(20);
     if (playerTest.getCurrentArmour() != 0)
     {
@@ -108,7 +108,7 @@ int main()
 
 
     std::cout<< "Player Test 8/11: setters() \n";
-    playerTest = Player("playerTest", 0, 0, 0, 0);
+    playerTest = Player("playerTest", 0, 0, 0);
     playerTest.setCurrentArmour(50);
     playerTest.setCurrentHealth(50);
     if (playerTest.getCurrentArmour() != 50)
@@ -121,7 +121,7 @@ int main()
     }
 
     std::cout<< "Player Test 9/11: fight, boss dies \n";
-    playerTest = Player("playerTest", 100, 100, 0, 0);
+    playerTest = Player("playerTest", 100, 100, 0);
     bossTest = Boss("bossTest", 10, 10, 10, "deathmessage");
     playerTest.fight(playerTest, bossTest);
 
@@ -145,7 +145,7 @@ int main()
     }
 
     std::cout<< "Player Test 10/11: receive attack \n";
-    playerTest = Player("playerTest", 10, 10, 10, 0);
+    playerTest = Player("playerTest", 10, 10, 10);
     playerTest.receiveAttack(10);
     playerTest.getCurrentArmour();
     if (playerTest.getCurrentArmour() != 0)
@@ -154,7 +154,7 @@ int main()
     }
 
     std::cout<< "Player Test 11/11: print inventory() \n";
-    playerTest = Player("playerTest", 0, 0, 0, 0);
+    playerTest = Player("playerTest", 0, 0, 0);
     Item* itemTest = new Item("testItem", 0, 0, 0);
 
     // redirect std::cin to a custom stream
