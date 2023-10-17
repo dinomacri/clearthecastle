@@ -202,17 +202,26 @@ Player characterSelection() {
     // player selects New
     else {
         clear();
-        printw("Enter your character name: ");
         refresh();
 
         char name[100];
         int nameIndex = 0;
         int ch;
+        int *terminal_window = getTerminalSize();
+
         while (1) {
+          mvprintw((terminal_window[0]) / 2, (terminal_window[1] / 2) - 12, "Enter characters name: ");
           ch = getch();
 
           if (ch == '\n' || ch == '\r') {
-              break; // Exit the loop on Enter key
+              if (nameIndex == 0)
+              {
+                continue;
+              }
+              else
+              {
+                break; // Exit the loop on Enter key
+              }
           } else if (ch == 127 && nameIndex > 0) {
               // Handle backspace (ASCII 127) to delete the last character
               nameIndex--;
@@ -224,7 +233,7 @@ Player characterSelection() {
           }
 
           clear();
-          printw("Enter your character name: %s", name);
+          mvprintw((terminal_window[0]) / 2, (terminal_window[1] / 2) + 11, name);
           refresh();
         }
         newCharacter.name = std::string(name);
@@ -232,16 +241,23 @@ Player characterSelection() {
        
         
         clear();
-        printw("Distribute ", totalBaseAttributes ," points between Health, Armour and Damage:\n");
         refresh();
 
         int pointsRemaining = totalBaseAttributes;
         while (pointsRemaining > 0) {
             clear();
-            printw("Points remaining: %d\n", pointsRemaining);
-            printw("1. Health: %d\n", newCharacter.health);
-            printw("2. Damage: %d\n", newCharacter.damage);
-            printw("3. Armour: %d\n", newCharacter.armour);
+
+            for (int i = 0; i < 40; i++)
+            {
+              mvprintw((terminal_window[0] / 2) - 3, ((terminal_window[1] / 2) - 20) + i, "=");
+              mvprintw((terminal_window[0] / 2) + 1, ((terminal_window[1] / 2) - 20) + i, "=");
+            }
+
+            mvprintw((terminal_window[0] / 2) - 4, (terminal_window[1] / 2) - 10, "Points remaining: %d\n", pointsRemaining);
+            mvprintw((terminal_window[0] / 2) - 2, (terminal_window[1] / 2) - 7, "1. Health: %d\n", newCharacter.health);
+            mvprintw((terminal_window[0] / 2) - 1, (terminal_window[1] / 2) - 7, "2. Damage: %d\n", newCharacter.damage);
+            mvprintw((terminal_window[0] / 2), (terminal_window[1] / 2) - 7, "3. Armour: %d\n", newCharacter.armour);
+            refresh();
          
             refresh();
 
@@ -295,7 +311,6 @@ Player characterSelection() {
         output << newCharacter.health << "\n";
         output << newCharacter.damage << "\n";
         output << newCharacter.armour << "\n";
-       
 
         output.close();
 
