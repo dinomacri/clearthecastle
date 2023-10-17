@@ -381,7 +381,7 @@ Player characterSelection()
   return player;
 }
 
-int selectOption(Player player)
+int selectOption()
 {
   initscr();
   noecho();
@@ -389,7 +389,6 @@ int selectOption(Player player)
   curs_set(0); // Hide the cursor
 
   int currentOption = 0;
-  int x, y;
   int maxX, maxY;
   std::string options[] = {"Attack", "Map", "Inventory"};
   int numOptions = 3;
@@ -483,7 +482,7 @@ void mainGameLoop(Player *player)
   room1.enterRoom(*player);
   sleep(1);
 
-  selectOption(*player); // GIVING PLAYER CHOICE ON WHAT TO DO.
+  selectOption(); // GIVING PLAYER CHOICE ON WHAT TO DO.
 
   room2.enterRoom(*player);
   sleep(1);
