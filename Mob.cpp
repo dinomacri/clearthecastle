@@ -115,7 +115,7 @@ void Mob::fight(Mob &target_player, Mob &target_boss)
 
     while (bossAlive == true && playerAlive == true)
     {
-        logger.print_bold("\n-> PROMPT: Enter [A]ttack, [M]ap or [I]nventory: ");
+        logger.print_bold("\n-> PROMPT: Enter [A]ttack or [I]nventory: ");
         char choice;
         std::cin >> choice;
         sleep(1);
@@ -148,10 +148,6 @@ void Mob::fight(Mob &target_player, Mob &target_boss)
                     exit(0);
                 }
             }
-        }
-        else if (choice == 'M' || choice == 'm')
-        {
-           // displayMap();
         }
         else if (choice == 'I' || choice == 'i')
         {
